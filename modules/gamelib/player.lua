@@ -164,17 +164,18 @@ InventorySlotLast = 10
 
 vocationNamesByClientId = {
     [0] = "No Vocation",
-    [1] = "Knight",
-    [2] = "Paladin",
-    [3] = "Sorcerer",
-    [4] = "Druid",
-    [9] = "Monk",
-    [10] = "Exalted Monk",
-    [11]= "Elite Knight",
-    [12] = "Royal Paladin",
-    [13] = "Master Sorcerer",
-    [14] = "Elder Druid"
+    [1] = "Sorcerer",          -- ✅ Corrigido
+    [2] = "Druid",             -- ✅ Corrigido
+    [3] = "Paladin",           -- ✅ Corrigido
+    [4] = "Knight",            -- ✅ Corrigido
+    [5] = "Master Sorcerer",   -- ✅ Corrigido
+    [6] = "Elder Druid",       -- ✅ Corrigido
+    [7] = "Royal Paladin",     -- ✅ Corrigido
+    [8] = "Elite Knight",      -- ✅ Corrigido
+    [9] = "Monk",              -- ✅ Adicionado
+    [10] = "Exalted Monk"      -- ✅ Adicionado
 }
+
 
 function Player:isPartyLeader()
     local shield = self:getShield()

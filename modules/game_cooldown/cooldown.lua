@@ -54,46 +54,59 @@ function terminate()
 end
 
 function loadIcon(iconId)
-    local spell, profile, spellName = Spells.getSpellByIcon(iconId)
-    if not spellName then
-        print('[WARNING] loadIcon: empty spellName for server spell id: ' .. iconId)
-        return nil, nil
-    end
-    if not profile then
-        print('[WARNING] loadIcon: empty profile for server spell id: ' .. iconId)
-        return nil, nil
+  local spell, profile, spellName = Spells.getSpellByIcon(iconId)
+  if not spellName then
+    return nil, nil -- silenciosamente ignora
+  end
+  if not profile then
+    return nil, nil
+  end
+
+  -- ✅ VERIFICA SE O ÍCONE EXISTE
+  if not SpellIcons or not spell.icon or not SpellIcons[spell.icon] then
+    -- Silenciosamente ignora spells sem ícone mapeado
+    return nil, nil
+  end
+
+  local icon = cooldownPanel:getChildById(iconId)
+  if not icon then
+    icon = g_ui.createWidget('SpellIcon', cooldownPanel)
+    icon:setId(iconId)
+  end
+
+  -- usa o atlas padrão do spelllist
+local spellId = SpellIcons[spell.icon][1]
+local settings = SpelllistSettings['Default']
+local atlas = settings.smallIconsFolder or settings.iconFile
+
+if atlas and g_resources.fileExists(atlas .. '.png') then
+  icon:setImageSource(atlas)
+  icon:setImageClip(Spells.getImageClipSmall(spellId, 'Default'))
+
+    icon.spellName = spellName
+
+    local progressRect = icon:getChildById(iconId)
+    local isNewProgressRect = false
+    if not progressRect then
+      progressRect = g_ui.createWidget('SpellProgressRect', icon)
+      progressRect:setId(iconId)
+      progressRect:fill('parent')
+      isNewProgressRect = true
     end
 
-    local icon = cooldownPanel:getChildById(iconId)
-    if not icon then
-        icon = g_ui.createWidget('SpellIcon')
-        icon:setId(iconId)
+    progressRect.icon = icon
+    progressRect:setTooltip(spellName .. ' (' .. (spell.exhaustion / 1000) .. ' sec. cooldown)')
+    if isNewProgressRect then
+      progressRect:setPercent(0)
     end
+  else
+    print('[WARNING] loadIcon: cooldown atlas not found for spell id: ' .. iconId)
+    icon = nil
+  end
 
-    local spellSettings = SpelllistSettings[profile]
-    if spellSettings then
-        icon:setImageSource(spellSettings.iconsForGameCooldown)
-        icon:setImageClip(Spells.getImageClipCooldown(spell.clientId, profile))
-        icon.spellName = spellName
-        local progressRect = icon:getChildById(iconId)
-        local isNewProgressRect = false
-        if not progressRect then
-            progressRect = g_ui.createWidget('SpellProgressRect', icon)
-            progressRect:setId(iconId)
-            progressRect:fill('parent')
-            isNewProgressRect = true
-        end
-        progressRect.icon = icon
-        progressRect:setTooltip(spellName .. " (" .. (spell.exhaustion / 1000) .. " sec. cooldown)")
-        if isNewProgressRect then
-            progressRect:setPercent(0)
-        end
-    else
-        print('[WARNING] loadIcon: empty spell icon for server spell id: ' .. iconId)
-        icon = nil
-    end
-    return icon, spellName
+  return icon, spellName
 end
+
 
 function onMiniWindowOpen()
     modules.client_options.setOption('showSpellGroupCooldowns', true)
@@ -217,7 +230,7 @@ function onSpellCooldown(iconId, duration)
     end
     local icon, spellName = loadIcon(iconId)
     if not icon then
-        print('[WARNING] Can not load cooldown icon on spell with id: ' .. iconId)
+      
         return
     end
     icon:setParent(cooldownPanel)

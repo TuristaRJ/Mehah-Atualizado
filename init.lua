@@ -9,20 +9,13 @@ Services = {
     --createAccount = "http://localhost/clientcreateaccount.php", --./client_entergame -- createAccount.lua
 }
 
---[[
 Servers_init = {
     ["http://127.0.0.1/login.php"] = {
         ["port"] = 80,
-        ["protocol"] = 1320,
+        ["protocol"] = 1511,
         ["httpLogin"] = true
     },
-    ["ip.net"] = {
-        ["port"] = 7171,
-        ["protocol"] = 860,
-        ["httpLogin"] = false
-    },
 }
-]]
 
 g_app.setName("OTClient - Redemption");
 g_app.setCompactName("otclient");

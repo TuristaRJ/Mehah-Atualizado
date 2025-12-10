@@ -5,6 +5,39 @@ local function string_empty(str)
     return #str == 0
 end
 
+-- Mapeamento de vocações customizadas para Action Bar
+-- Como o servidor envia vocação 5 em vez de 9, mapeamos 5 para aceitar spells de Monk
+local customVocationMapping = {
+  [5] = {1, 5, 9, 10},   -- ✅ Master Sorcerer (que o servidor ENVIA) aceita spells de Monk
+  [9] = {1, 5, 9, 10},   -- ✅ Monk (caso o servidor envie correto no futuro)
+  [10] = {1, 5, 9, 10}   -- ✅ Exalted Monk (caso o servidor envie correto no futuro)
+}
+
+
+-- Função auxiliar para verificar se o player pode usar a spell (considerando vocações customizadas)
+local function canUseSpellVocation(spellVocations, playerVocation)
+  if not spellVocations then
+    return true
+  end
+  
+  -- Verificação direta
+  if table.contains(spellVocations, playerVocation) then
+    return true
+  end
+  
+  -- Verificação de vocação customizada (Monk/Exalted Monk)
+  if customVocationMapping[playerVocation] then
+    for _, mappedVoc in ipairs(customVocationMapping[playerVocation]) do
+      if table.contains(spellVocations, mappedVoc) then
+        return true
+      end
+    end
+  end
+  
+  return false
+end
+
+
 local function short_text(text, chars_limit)
     if #text > chars_limit then
         local newstring = ''
@@ -71,36 +104,51 @@ local function getItemNameById(itemId)
 end
 
 local function playerCanUseSpell(spellData)
-    if not g_game.isOnline() then
-        return
-    end
+  if not g_game.isOnline() then return end
+  if not spellData then return false end
 
-    if not spellData then
-        return false
-    end
 
-    if spellData.needLearn and not spellListData[tostring(spellData.id)] then
-        return false
-    end
+ 
+  
+  if spellData.vocations then
+    local voc = player:getVocation()
 
-    if spellData.mana and (player:getMana() < spellData.mana) then
-        return false
-    end
+  end
 
-    if spellData.level and (player:getLevel() < spellData.level) then
-        return false
-    end
+  if spellData.needLearn and not spellListData[tostring(spellData.id)] then
 
-    if spellData.soul and (player:getSoul() < spellData.soul) then
-        return false
-    end
+    return false
+  end
 
-    if spellData.vocations and (not table.contains(spellData.vocations, translateVocation(player:getVocation()))) then
-        return false
-    end
+  if spellData.mana and player:getMana() < spellData.mana then
 
-    return true
+    return false
+  end
+
+  if spellData.level and player:getLevel() < spellData.level then
+
+    return false
+  end
+
+  if spellData.soul and player:getSoul() < spellData.soul then
+
+    return false
+  end
+
+  if spellData.vocations then
+    local voc = player:getVocation()
+    if not canUseSpellVocation(spellData.vocations, voc) then
+
+      return false
+    end
+  end
+
+  return true
 end
+
+
+
+
 -- /*=============================================
 -- =            Hotkeys             =
 -- =============================================*/
@@ -276,46 +324,48 @@ function clearButton(button, removeAction)
 end
 
 function updateButtonState(button)
-    if not button then
-        return
+  if not button then
+    return
+  end
+
+  if not player then
+    player = g_game.getLocalPlayer()
+  end
+  if not player or not button.item then
+    return
+  end
+
+  button:recursiveGetChildById('activeSpell'):setVisible(false)
+
+  if button.cache.isSpell then
+    setupButtonTooltip(button, false)
+    -- cinza se NÃO puder usar
+    button.item.text.gray:setVisible(not playerCanUseSpell(button.cache.spellData))
+
+    local spellId = 0
+    button:recursiveGetChildById('activeSpell'):setVisible(button.cache.spellData.id == spellId)
+
+  elseif button.cache.itemId ~= 0 then
+    local tier = 0
+    if g_game.getFeature(GameThingUpgradeClassification) then
+      tier = button.cache.upgradeTier
     end
 
-    if not player then
-        player = g_game.getLocalPlayer()
+    local isItemEquipped = player:hasEquippedItemId(button.cache.itemId, tier)
+    local itemCount      = player:getInventoryCount(button.cache.itemId, tier)
+
+    if g_game.getFeature(GameEnterGameShowAppearance) then
+      if button.cache.actionType == UseTypes["Equip"] then
+        button.item:setChecked(itemCount ~= 0 and isItemEquipped)
+      end
+      button.item.gray:setVisible(itemCount == 0)
     end
 
-    if not player then
-        return
-    end
-    if not button.item then
-        return
-    end
-
-    button:recursiveGetChildById('activeSpell'):setVisible(false)
-    if button.cache.isSpell then
-        setupButtonTooltip(button, false)
-        button.item.text.gray:setVisible(not playerCanUseSpell(button.cache.spellData))
-        local spellId = 0
-        button:recursiveGetChildById('activeSpell'):setVisible(button.cache.spellData.id == spellId)
-    elseif button.cache.itemId ~= 0 then
-        local tier = 0
-        if g_game.getFeature(GameThingUpgradeClassification) then
-            tier = button.cache.upgradeTier
-        end
-        local isItemEquipped = player:hasEquippedItemId(button.cache.itemId, tier)
-        local itemCount = player:getInventoryCount(button.cache.itemId, tier)
-
-        if g_game.getFeature(GameEnterGameShowAppearance) then -- fix old protocol
-            if button.cache.actionType == UseTypes["Equip"] then
-                button.item:setChecked(itemCount ~= 0 and isItemEquipped)
-            end
-
-            button.item.gray:setVisible(itemCount == 0)
-        end
-        button.item:setItemCount(itemCount)
-        setupButtonTooltip(button, false)
-    end
+    button.item:setItemCount(itemCount)
+    setupButtonTooltip(button, false)
+  end
 end
+
 
 function getButtonCache(button)
     if not button then
@@ -703,80 +753,99 @@ function updateButton(button)
     local sendText = buttonData["actionsetting"]["chatText"]
     local passiveAbility = buttonData["actionsetting"]["passiveAbility"]
 
-    if useAction then
-        button.item:setItemId(useAction, true)
-        button.item:setOn(true)
-        local cached = cachedItemWidget[useAction]
-        if cached then
-            table.insert(cached, button)
+     if useAction then
+    button.item:setItemId(useAction, true)
+    button.item:setOn(true)
+
+    local cached = cachedItemWidget[useAction]
+    if cached then
+      table.insert(cached, button)
+    else
+      cachedItemWidget[useAction] = {}
+      table.insert(cachedItemWidget[useAction], button)
+    end
+
+    local spellData = Spells.getRuneSpellByItem(useAction)
+if spellData then
+  button.cache.isRuneSpell = true
+  button.cache.spellData = spellData
+
+  -- USA A NOVA FUNÇÃO DE VERIFICAÇÃO
+  local voc = player:getVocation()
+  if spellData.vocations and not canUseSpellVocation(spellData.vocations, voc) then
+    button.item.gray:setVisible(true)
+  end
+end
+
+    button.cache.itemId = button.item:getItemId()
+    button.cache.upgradeTier = buttonData["actionsetting"]["upgradeTier"]
+    local useTypeName = buttonData["actionsetting"]["useType"]
+    button.cache.actionType = UseTypes[useTypeName] or UseTypes["Use"]
+    ItemsDatabase.setTier(button.item, button.cache.upgradeTier)
+    updateButtonState(button)
+  end
+
+  if sendText then
+    local spellData, param = Spells.getSpellDataByParamWords(sendText:lower())
+    if spellData then
+      -- resolve nome e clientId da mesma forma que o spell list
+      local spellName = spellData.name or Spells.getSpellNameByWords(spellData.words)
+      if spellName then
+        local spellId = Spells.getClientId(spellName)
+        if not spellId then
+          
         else
-            cachedItemWidget[useAction] = {}
-            table.insert(cachedItemWidget[useAction], button)
-        end
-        local spellData = Spells.getRuneSpellByItem(useAction)
-        if spellData then
-            button.cache.isRuneSpell = true
-            button.cache.spellData = spellData
-            if spellData.vocations and not table.contains(spellData.vocations, translateVocation(player:getVocation())) then
-                button.item.gray:setVisible(true)
-            end
-        end
+         local profile  = 'Default'
+local settings = SpelllistSettings[profile]
 
-        button.cache.itemId = button.item:getItemId()
-        button.cache.upgradeTier = buttonData["actionsetting"]["upgradeTier"]
-        local useTypeName = buttonData["actionsetting"]["useType"]
-        button.cache.actionType = UseTypes[useTypeName] or UseTypes["Use"]
-        ItemsDatabase.setTier(button.item, button.cache.upgradeTier)
-        updateButtonState(button)
+          if settings and settings.iconFile then
+  local source = settings.iconFile
+  local clip   = Spells.getImageClip(spellId, profile)
+  button.item.text:setImageSource(source)
+  button.item.text:setImageClip(clip)
+end
+
+        end
+      else
+        
+      end
+
+      button.cache.isSpell   = true
+      button.cache.spellID   = spellData.id
+      button.cache.spellData = spellData
+      button.cache.primaryGroup = spellData.group and Spells.getGroupIds(spellData)[1] or nil
+
+      if param then
+        local formatedParam = param:gsub('"', '')
+        button.parameterText:setText(short_text('"' .. formatedParam, 4))
+        button.cache.castParam = formatedParam
+      end
+
+      if not playerCanUseSpell(spellData) then
+        button.item.text.gray:setVisible(true)
+      end
+
+      checkRemainSpellCooldown(button, spellData.id)
+    else
+      -- não é spell conhecida, mostra só o texto
+      button.item.text:setText(short_text(sendText, 15))
     end
 
-    if sendText then
-        local spellData, param = Spells.getSpellDataByParamWords(sendText:lower())
-        if spellData then
-            local spellId = spellData.clientId
-            if not spellId then
-                print("Warning Spell ID not found L734 modules/game_actionbar/logics/ActionButtonLogic.lua")
-                return
-            end
-            local source = SpelllistSettings['Default'].iconFile
-            local clip = Spells.getImageClip(spellId, 'Default')
+    button.item:setOn(true)
+    button.cache.param          = sendText
+    button.cache.sendAutomatic  = buttonData["actionsetting"]["sendAutomatically"]
+    button.cache.actionType     = UseTypes["chatText"]
+  end
 
-            button.item.text:setImageSource(source)
-            button.item.text:setImageClip(clip)
-            button.cache.isSpell = true
-            button.cache.spellID = spellData.id
-            button.cache.spellData = spellData
-            button.cache.primaryGroup = spellData.group and Spells.getGroupIds(spellData)[1] or nil
+  if passiveAbility then
+    local passive = PassiveAbilities[passiveAbility]
+    button.item.text:setImageSource(passive.icon)
+    button.item.text:setImageClip("0 0 32 32")
+    button.cache.actionType = UseTypes["passiveAbility"]
+    button.cache.isPassive  = true
+    updateActionPassive(button)
+  end
 
-            if param then
-                local formatedParam = param:gsub('"', '')
-                button.parameterText:setText(short_text('"' .. formatedParam, 4))
-                button.cache.castParam = formatedParam
-            end
-
-            if not playerCanUseSpell(spellData) then
-                button.item.text.gray:setVisible(true)
-            end
-
-            checkRemainSpellCooldown(button, spellData.id)
-        else
-            button.item.text:setText(short_text(sendText, 15))
-        end
-
-        button.item:setOn(true)
-        button.cache.param = sendText
-        button.cache.sendAutomatic = buttonData["actionsetting"]["sendAutomatically"]
-        button.cache.actionType = UseTypes["chatText"]
-    end
-
-    if passiveAbility then
-        local passive = PassiveAbilities[passiveAbility]
-        button.item.text:setImageSource(passive.icon)
-        button.item.text:setImageClip("0 0 32 32")
-        button.cache.actionType = UseTypes["passiveAbility"]
-        button.cache.isPassive = true
-        updateActionPassive(button)
-    end
 
     button.item:setDraggable(true)
     setupButtonTooltip(button, false)

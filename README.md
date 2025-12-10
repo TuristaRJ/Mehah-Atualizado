@@ -598,3 +598,5 @@ See: [MIT License](http://opensource.org/licenses/MIT)
 ## <a id="contributors"></a>❤️ Contributors
 If you are interested in supporting the project, donate here:  
 **[PayPal](https://www.paypal.com/donate/?business=CV9D5JF8E46LY&no_recurring=0&item_name=Thank+you+very+much+for+your+donation.&currency_code=BRL)**
+#   M e h a h - A t u a l i z a d o  
+ 
