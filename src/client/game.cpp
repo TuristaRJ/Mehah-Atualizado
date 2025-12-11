@@ -2052,3 +2052,29 @@ void Game::processCyclopediaCharacterMiscStats(const CyclopediaCharacterMiscStat
 {
     g_lua.callGlobalField("g_game", "onCyclopediaCharacterMiscStats", data);
 }
+
+void Game::sendWeaponProficiencyAction(uint8_t action, uint16_t itemId)
+{
+    if (!m_protocolGame || !m_online)
+        return;
+    m_protocolGame->sendWeaponProficiencyAction(action, itemId);
+}
+
+void Game::sendWeaponProficiencyApply(uint16_t itemId, const std::vector<uint8_t>& perks)
+{
+    if (!m_protocolGame || !m_online)
+        return;
+    m_protocolGame->sendWeaponProficiencyApply(itemId, perks);
+}
+
+void Game::processWeaponProficiency(uint16_t itemId, uint32_t experience, const std::vector<std::pair<uint8_t, uint8_t>>& perks, uint8_t marketCategory)
+{
+    // Converter std::pair para tabela Lua manualmente
+    std::vector<std::vector<uint8_t>> perksLua;
+    perksLua.reserve(perks.size());
+    for (const auto& [perkId, perkLevel] : perks) {
+        perksLua.push_back({perkId, perkLevel});
+    }
+    g_lua.callGlobalField("g_game", "onWeaponProficiency", itemId, experience, perksLua, marketCategory);
+}
+

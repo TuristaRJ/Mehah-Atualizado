@@ -1,0 +1,70 @@
+[
+  {
+    "Levels": [
+      {
+        "Perks": [
+          { "SkillId": 7, "Type": 3, "Value": 1 }
+        ]
+      },
+      {
+        "Perks": [
+          { "Range": 3, "Type": 22, "Value": 10 },
+          { "AugmentType": 14, "SpellId": 124, "Type": 5, "Value": 0.05 },
+          { "Type": 12, "Value": 0.04 }
+        ]
+      },
+      {
+        "Perks": [
+          { "Type": 7, "Value": 0.03 },
+          { "AugmentType": 15, "SpellId": 124, "Type": 5, "Value": 0.02 },
+          { "Type": 12, "Value": 0.08 }
+        ]
+      },
+      {
+        "Perks": [
+          { "AugmentType": 16, "SpellId": 124, "Type": 5, "Value": 0.2 },
+          { "AugmentType": 2, "SpellId": 124, "Type": 5, "Value": 0.04 }
+        ]
+      },
+      {
+        "Perks": [
+          { "SkillId": 7, "Type": 26, "Value": 0.1 },
+          { "AugmentType": 17, "SpellId": 124, "Type": 5, "Value": 0.03 },
+          { "Type": 0, "Value": 2 }
+        ]
+      },
+      {
+        "Perks": [
+          { "Type": 12, "Value": 0.1 },
+          { "SkillId": 1, "Type": 27, "Value": 2.0 }
+        ]
+      },
+      {
+        "Perks": [
+          { "Type": 8, "Value": 0.02 }
+        ]
+      }
+    ],
+    "Name": "Sanguine Bow",
+    "ProficiencyId": 13,
+    "Version": 8,
+    "ItemId": 43877,
+    "MarketCategory": 19
+  },
+  {
+    "Levels": [
+      { "Perks": [ { "SkillId": 7, "Type": 3, "Value": 1 } ] },
+      { "Perks": [ { "Type": 12, "Value": 0.04 } ] },
+      { "Perks": [ { "Type": 7, "Value": 0.03 } ] },
+      { "Perks": [ { "Type": 0, "Value": 2 } ] },
+      { "Perks": [ { "Type": 12, "Value": 0.08 } ] },
+      { "Perks": [ { "Type": 12, "Value": 0.10 } ] },
+      { "Perks": [ { "Type": 8, "Value": 0.02 } ] }
+    ],
+    "Name": "Umbral Bow",
+    "ProficiencyId": 14,
+    "Version": 1,
+    "ItemId": 20083,
+    "MarketCategory": 19
+  }
+]

@@ -56,6 +56,8 @@ protected:
     void processGameStart();
     void processGameEnd();
     void processDeath(uint8_t deathType, uint8_t penality);
+    static void processWeaponProficiency(uint16_t itemId, uint32_t experience, const std::vector<std::pair<uint8_t, uint8_t>>& perks, uint8_t marketCategory);
+    static void processProficiencyNotification(uint16_t itemId, uint32_t experience, bool hasUnusedPerk);
 
     void processGMActions(const std::vector<uint8_t>& actions);
     void processInventoryChange(uint8_t slot, const ItemPtr& item);
@@ -419,6 +421,8 @@ public:
     void requestBossSlootInfo();
     void requestBossSlotAction(uint8_t action, uint32_t raceId);
     void sendStatusTrackerBestiary(uint16_t raceId, bool status);
+    void sendWeaponProficiencyAction(uint8_t action, uint16_t itemId = 0);
+    void sendWeaponProficiencyApply(uint16_t itemId, const std::vector<uint8_t>& perks);
     void sendOpenRewardWall();
     void requestOpenRewardHistory();
     void requestGetRewardDaily(const uint8_t bonusShrine, const std::map<uint16_t, uint8_t>& items);

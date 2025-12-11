@@ -201,42 +201,93 @@ function optionsController:onTerminate()
 end
 
 function optionsController:onGameStart()
-    optionsShrink = g_settings.getBoolean('mainpanel_shrink_options')
-    refreshOptionsSizes()
-    modules.game_interface.setupOptionsMainButton()
-    modules.client_options.setupOptionsMainButton()
-    local getOptionsPanel = optionsController.ui.onPanel.options
-    local children = getOptionsPanel:getChildren()
-    table.sort(children, function(a, b)
-        return (a.index or 1000) < (b.index or 1000)
-    end)
-    getOptionsPanel:reorderChildren(children)
-    optionsController:scheduleEvent(function()
-        if optionPanel then
-            local config = loadButtonConfig()
-            buttonConfigs = config.buttons or {}
-            buttonOrder = config.order or {}
-            local optionsPanel = optionsController.ui.onPanel.options
-            if optionsPanel then
-                for _, button in ipairs(optionsPanel:getChildren()) do
-                    local id = button:getId()
-                    if id and buttonConfigs[id] then
-                        button:setVisible(buttonConfigs[id].visible)
-                    end
-                end
-                reorderButtons()
-                updateDisplayedButtonsList()
-                updateAvailableButtonsList()
-                reloadMainPanelSizes()
-            end
+  optionsShrink = g_settings.getBoolean('mainpanel_shrink_options')
+  refreshOptionsSizes()
+  modules.game_interface.setupOptionsMainButton()
+  modules.client_options.setupOptionsMainButton()
+
+  local getOptionsPanel = optionsController.ui.onPanel.options
+  local children = getOptionsPanel:getChildren()
+  table.sort(children, function(a, b)
+    return (a.index or 1000) < (b.index or 1000)
+  end)
+  getOptionsPanel:reorderChildren(children)
+
+  -- aplica visibilidade/configuração dos botões depois de carregar painel
+  optionsController:scheduleEvent(function()
+    if optionPanel then
+      local config = loadButtonConfig()
+      buttonConfigs = config.buttons or {}
+      buttonOrder   = config.order   or {}
+
+      local optionsPanel = optionsController.ui.onPanel.options
+      if optionsPanel then
+        for _, button in ipairs(optionsPanel:getChildren()) do
+          local id = button:getId()
+          if id and buttonConfigs[id] then
+            button:setVisible(buttonConfigs[id].visible)
+          end
         end
-    end, 50, "onGameStart")
-    if g_game.getClientVersion() >= 1400 and not controlButton1400 then
-        controlButton1400 = modules.game_mainpanel.addToggleButton('controButtons', tr('Manage control buttons'),
-        '/images/options/button_control', function() modules.client_options.openOptionsCategory("Interface", "Control Buttons") end, false, 1)
-        controlButton1400:setOn(false)
+
+        reorderButtons()
+        updateDisplayedButtonsList()
+        updateAvailableButtonsList()
+        reloadMainPanelSizes()
+      end
     end
+  end, 50, "onGameStart")
+
+  -- cria botões extras (Wheel, Helper, Weapon Proficiency) após mainpanel estar pronto
+  optionsController:scheduleEvent(function()
+    -- exemplo: botão da Wheel (se você usar)
+    local openWheelSafe = function()
+      if GameWheel and GameWheel.requestOpenWindow then
+        GameWheel.requestOpenWindow()
+      elseif g_game.sendOpenDestinyWheel then
+        g_game.sendOpenDestinyWheel(g_game.getLocalPlayer():getId())
+      end
+    end
+
+    wheelButton = addToggleButton(
+      "WheelButton",
+      tr("Wheel of Destiny"),
+      "/images/topbuttons/skillWheelDialog",
+      openWheelSafe,
+      true,
+      3
+    )
+
+    -- exemplo: botão do Helper (se existir)
+    local helperButton = addToggleButton(
+      "HelperButton",
+      tr("Helper"),
+      "/images/topbuttons/helper",
+      function()
+        if _G.toggleHelper then
+          toggleHelper()
+        else
+          g_logger.warning("Helper: função global toggleHelper não encontrada.")
+        end
+      end,
+      true,
+      3
+    )
+
+  end, 100, "createButtons")
+
+  if g_game.getClientVersion() >= 1400 and not controlButton1400 then
+    controlButton1400 = modules.game_mainpanel.addToggleButton(
+      'controButtons', tr('Manage control buttons'),
+      '/images/options/button_control',
+      function()
+        modules.client_options.openOptionsCategory("Interface", "Control Buttons")
+      end,
+      false, 1
+    )
+    controlButton1400:setOn(false)
+  end
 end
+
 
 function optionsController:onGameEnd()
 end

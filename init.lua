@@ -68,6 +68,10 @@ g_resources.searchAndAddPackages('/', '.otpkg', true)
 -- load settings
 g_configs.loadSettings('/config.otml')
 
+-- Enable packet logging (COLA ANTES de g_modules.discoverModules())
+print("=== PACKET LOGGER ATIVADO ===")
+g_game.enableFeature(OtcGameProtocolChecksum) -- se tiver
+
 g_modules.discoverModules()
 
 -- libraries modules 0-99

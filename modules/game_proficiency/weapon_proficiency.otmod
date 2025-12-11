@@ -1,0 +1,9 @@
+Module
+  name: game_proficiency
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1001
+  scripts: [proficiency_data, const , game_proficiency]
+
+  @onLoad: init()
+  @onUnload: terminate()

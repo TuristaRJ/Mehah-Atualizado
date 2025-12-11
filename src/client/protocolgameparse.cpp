@@ -6241,12 +6241,23 @@ void ProtocolGame::parseWeaponProficiencyExperience(const InputMessagePtr& msg)
 
 void ProtocolGame::parseWeaponProficiencyInfo(const InputMessagePtr& msg)
 {
-    msg->getU16(); // itemId
-    msg->getU32(); // experience
+    const uint16_t itemId     = msg->getU16();
+    const uint32_t experience = msg->getU32();
 
-    const uint8_t size = msg->getU8();
-    for (auto j = 0; j < size; ++j) {
-        msg->getU8(); // proficiencyLevel 
-        msg->getU8(); // perkPosition 
+    const uint8_t perksCount = msg->getU8();
+    std::vector<std::pair<uint8_t, uint8_t>> perks;
+    perks.reserve(perksCount);
+
+    for (uint8_t j = 0; j < perksCount; ++j) {
+        const uint8_t level    = msg->getU8();
+        const uint8_t position = msg->getU8();
+        perks.emplace_back(level, position);
     }
+
+    // se o protocolo desse pacote não mandar categoria, usa 0
+    const uint8_t marketCategory = 0;
+
+    g_game.processWeaponProficiency(itemId, experience, perks, marketCategory);
 }
+
+

@@ -1527,3 +1527,25 @@ void ProtocolGame::openContainerQuickLoot(const uint8_t action, const uint8_t ca
     }
     send(msg);
 }
+void ProtocolGame::sendWeaponProficiencyAction(uint8_t action, uint16_t itemId)
+{
+    const auto msg = std::make_shared<OutputMessage>();
+    msg->addU8(Proto::ClientWeaponProficiencyAction);
+    msg->addU8(action);
+    if (action == 0x01) {
+        msg->addU16(itemId);
+    }
+    send(msg);
+}
+
+void ProtocolGame::sendWeaponProficiencyApply(uint16_t itemId, const std::vector<uint8_t>& perks)
+{
+    const auto msg = std::make_shared<OutputMessage>();
+    msg->addU8(Proto::ClientWeaponProficiencyApply);
+    msg->addU16(itemId);
+    msg->addU8(static_cast<uint8_t>(perks.size()));
+    for (const uint8_t perk : perks) {
+        msg->addU8(perk);
+    }
+    send(msg);
+}

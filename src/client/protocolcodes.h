@@ -241,6 +241,8 @@ namespace Proto
         ClientUseStash = 40,
         ClientBestiaryTrackerStatus = 42,
         ClientPartyAnalyzerAction = 43,
+        ClientWeaponProficiencyAction = 196,
+        ClientWeaponProficiencyApply = 197,
 
         // all in game opcodes must be equal or greater than 50
         ClientFirstGameOpcode = 50,
