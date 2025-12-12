@@ -216,7 +216,7 @@ function optionsController:onGameStart()
   -- aplica visibilidade/configuração dos botões depois de carregar painel
   optionsController:scheduleEvent(function()
     if optionPanel then
-      local config = loadButtonConfig()
+      local config  = loadButtonConfig()
       buttonConfigs = config.buttons or {}
       buttonOrder   = config.order   or {}
 
@@ -224,22 +224,21 @@ function optionsController:onGameStart()
       if optionsPanel then
         for _, button in ipairs(optionsPanel:getChildren()) do
           local id = button:getId()
-          if id and buttonConfigs[id] then
+
+          -- não mexe nos botões de Weapon Proficiency
+          if id == "weaponProficiencyButton" or id == "weaponProficiencyWPButton" then
+            -- skip
+          elseif id and buttonConfigs[id] then
             button:setVisible(buttonConfigs[id].visible)
           end
         end
-
-        reorderButtons()
-        updateDisplayedButtonsList()
-        updateAvailableButtonsList()
-        reloadMainPanelSizes()
       end
     end
   end, 50, "onGameStart")
 
-  -- cria botões extras (Wheel, Helper, Weapon Proficiency) após mainpanel estar pronto
+  -- cria botões extras do mainpanel
   optionsController:scheduleEvent(function()
-    -- exemplo: botão da Wheel (se você usar)
+    -- Wheel of Destiny
     local openWheelSafe = function()
       if GameWheel and GameWheel.requestOpenWindow then
         GameWheel.requestOpenWindow()
@@ -257,7 +256,7 @@ function optionsController:onGameStart()
       3
     )
 
-    -- exemplo: botão do Helper (se existir)
+    -- Helper
     local helperButton = addToggleButton(
       "HelperButton",
       tr("Helper"),
@@ -273,8 +272,64 @@ function optionsController:onGameStart()
       3
     )
 
+    -- Weapon Proficiency no mainpanel
+    local openWeaponProficiencySafe = function()
+      if modules.game_proficiency and modules.game_proficiency.WeaponProficiency then
+        modules.game_proficiency.WeaponProficiency.toggle()
+      else
+        g_logger.warning("WeaponProficiency: módulo game_proficiency não carregado.")
+      end
+    end
+
+   WeaponProficiency = WeaponProficiency or {}
+
+WeaponProficiency.mainButton = addToggleButton(
+  "weaponProficiencyWPButton",
+  tr("Weapon Proficiency"),
+  "/images/topbuttons/weaponProficiency_off", -- base
+  openWeaponProficiencySafe,
+  true,
+  1
+)
+
+if WeaponProficiency.mainButton then
+  -- garante sempre um ícone visível
+  if WeaponProficiency.mainButton.setIcon then
+    WeaponProficiency.mainButton:setIcon("/images/topbuttons/weaponProficiency_off")
+  elseif WeaponProficiency.mainButton.setImageSource then
+    WeaponProficiency.mainButton:setImageSource("/images/topbuttons/weaponProficiency_off")
+  end
+
+  -- tenta configurar o ON; se der ruim, continua vendo o OFF
+  local hasOnSupport = false
+
+  if WeaponProficiency.mainButton.setIconOn then
+    WeaponProficiency.mainButton:setIconOn("/images/topbuttons/weaponProficiency_on")
+    hasOnSupport = true
+  end
+  if WeaponProficiency.mainButton.setImageSourceOn then
+    WeaponProficiency.mainButton:setImageSourceOn("/images/topbuttons/weaponProficiency_on")
+    hasOnSupport = true
+  end
+
+  -- se o tipo de botão ignorar IconOn/ImageSourceOn, não deixa transparente:
+  if not hasOnSupport then
+    -- usa sempre o OFF (nenhuma transparência)
+    if WeaponProficiency.mainButton.setIcon then
+      WeaponProficiency.mainButton:setIcon("/images/topbuttons/weaponProficiency_off")
+    elseif WeaponProficiency.mainButton.setImageSource then
+      WeaponProficiency.mainButton:setImageSource("/images/topbuttons/weaponProficiency_off")
+    end
+  end
+
+  WeaponProficiency.mainButton:setOn(false)
+end
+
+
+
   end, 100, "createButtons")
 
+  -- botão de controlar botões (1400+)
   if g_game.getClientVersion() >= 1400 and not controlButton1400 then
     controlButton1400 = modules.game_mainpanel.addToggleButton(
       'controButtons', tr('Manage control buttons'),

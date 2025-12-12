@@ -1561,6 +1561,22 @@
 },
 {
   "Levels": [
+    { "Perks": [ { "SkillId": 7, "Type": 3, "Value": 1 } ] },
+    { "Perks": [ { "Range": 3, "Type": 22, "Value": 10 }, { "AugmentType": 14, "SpellId": 124, "Type": 5, "Value": 0.05 }, { "Type": 12, "Value": 0.04 } ] },
+    { "Perks": [ { "Type": 7, "Value": 0.03 }, { "AugmentType": 15, "SpellId": 124, "Type": 5, "Value": 0.04 }, { "Type": 12, "Value": 0.08 } ] },
+    { "Perks": [ { "AugmentType": 16, "SpellId": 124, "Type": 5, "Value": 0.4 }, { "AugmentType": 2, "SpellId": 124, "Type": 5, "Value": 0.08 } ] },
+    { "Perks": [ { "SkillId": 7, "Type": 26, "Value": 0.1 }, { "AugmentType": 17, "SpellId": 124, "Type": 5, "Value": 0.03 }, { "Type": 0, "Value": 2 } ] },
+    { "Perks": [ { "Type": 12, "Value": 0.1 }, { "SkillId": 1, "Type": 27, "Value": 2.0 } ] },
+    { "Perks": [ { "Type": 8, "Value": 0.03 } ] }
+  ],
+  "Name": "Grand Sanguine Bow",
+  "ProficiencyId": 23,
+  "Version": 7,
+  "ItemId": 43878,
+  "MarketCategory": 19
+},
+{
+  "Levels": [
     { "Perks": [ { "Type": 2, "Value": 1 } ] },
     { "Perks": [ { "SkillId": 9, "Type": 25, "Value": 0.12 }, { "Type": 21, "Value": 25 } ] },
     { "Perks": [ { "BestiaryId": 11, "BestiaryName": "Humanoid", "Type": 6, "Value": 0.03 }, { "Type": 11, "Value": 0.02 } ] },
@@ -1770,7 +1786,7 @@
     { "Perks": [ { "Type": 0, "Value": 3 } ] },
     { "Perks": [ { "Type": 15, "Value": 2.0 } ] }
   ],
-  "Name": "Throw - Small Stone",
+  "Name": "Small Stone",
   "ProficiencyId": 125,
   "Version": 3,
   "ItemId": 1781,
@@ -1784,7 +1800,7 @@
     { "Perks": [ { "ElementId": 64, "Type": 9, "Value": 0.005 }, { "ElementId": 64, "Type": 13, "Value": 0.02 } ] },
     { "Perks": [ { "ElementId": 64, "Type": 9, "Value": 0.01 }, { "ElementId": 64, "Type": 13, "Value": 0.04 } ] }
   ],
-  "Name": "Throw - Snowball",
+  "Name": "Snowball",
   "ProficiencyId": 126,
   "Version": 1,
   "ItemId": 2992,
@@ -1798,7 +1814,7 @@
     { "Perks": [ { "Type": 0, "Value": 1 } ] },
     { "Perks": [ { "Type": 0, "Value": 2 } ] }
   ],
-  "Name": "Throw - Spear",
+  "Name": " Spear",
   "ProficiencyId": 127,
   "Version": 1,
   "ItemId": 3277,
@@ -1812,7 +1828,7 @@
     { "Perks": [ { "Range": 3, "Type": 22, "Value": 2 } ] },
     { "Perks": [ { "Range": 3, "Type": 22, "Value": 4 } ] }
   ],
-  "Name": "Throw - Throwing Star",
+  "Name": "Throwing Star",
   "ProficiencyId": 128,
   "Version": 1,
   "ItemId": 3287,
@@ -1826,7 +1842,7 @@
     { "Perks": [ { "Range": 4, "Type": 22, "Value": 2 } ] },
     { "Perks": [ { "Range": 4, "Type": 22, "Value": 4 } ] }
   ],
-  "Name": "Throw - Throwing Knife",
+  "Name": "Throwing Knife",
   "ProficiencyId": 129,
   "Version": 1,
   "ItemId": 3298,
@@ -1840,7 +1856,7 @@
     { "Perks": [ { "BestiaryId": 14, "BestiaryName": "Mammal", "Type": 6, "Value": 0.01 } ] },
     { "Perks": [ { "BestiaryId": 14, "BestiaryName": "Mammal", "Type": 6, "Value": 0.02 } ] }
   ],
-  "Name": "Throw - Hunting Spear",
+  "Name": "Hunting Spear",
   "ProficiencyId": 131,
   "Version": 2,
   "ItemId": 3347,
@@ -1854,7 +1870,7 @@
     { "Perks": [ { "Type": 17, "Value": 0.005 } ] },
     { "Perks": [ { "Type": 17, "Value": 0.01 } ] }
   ],
-  "Name": "Throw - Viper Star",
+  "Name": "Viper Star",
   "ProficiencyId": 132,
   "Version": 1,
   "ItemId": 7366,
@@ -1868,7 +1884,7 @@
     { "Perks": [ { "Type": 20, "Value": 2 } ] },
     { "Perks": [ { "Type": 20, "Value": 4 } ] }
   ],
-  "Name": "Throw - Enchanted Spear",
+  "Name": "Enchanted Spear",
   "ProficiencyId": 133,
   "Version": 4,
   "ItemId": 7367,
@@ -2092,7 +2108,7 @@
     { "Perks": [ { "Type": 21, "Value": 5 } ] },
     { "Perks": [ { "Type": 21, "Value": 10 } ] }
   ],
-  "Name": "Throw - Assassin Star",
+  "Name": "Assassin Star",
   "ProficiencyId": 149,
   "Version": 1,
   "ItemId": 7368,
@@ -2106,7 +2122,7 @@
     { "Perks": [ { "SkillId": 7, "Type": 25, "Value": 0.02 } ] },
     { "Perks": [ { "SkillId": 7, "Type": 25, "Value": 0.04 } ] }
   ],
-  "Name": "Throw - Royal Spear",
+  "Name": "Royal Spear",
   "ProficiencyId": 150,
   "Version": 1,
   "ItemId": 7378,
@@ -2204,7 +2220,7 @@
     { "Perks": [ { "Type": 16, "Value": 0.0025 } ] },
     { "Perks": [ { "Type": 16, "Value": 0.005 } ] }
   ],
-  "Name": "Throw - Glooth Spear",
+  "Name": "Glooth Spear",
   "ProficiencyId": 157,
   "Version": 1,
   "ItemId": 21158,
@@ -2218,7 +2234,7 @@
     { "Perks": [ { "ElementId": 16, "Type": 9, "Value": 0.005 }, { "ElementId": 16, "Type": 13, "Value": 0.02 } ] },
     { "Perks": [ { "ElementId": 16, "Type": 9, "Value": 0.01 }, { "ElementId": 16, "Type": 13, "Value": 0.04 } ] }
   ],
-  "Name": "Throw - Leaf Star",
+  "Name": "Leaf Star",
   "ProficiencyId": 158,
   "Version": 1,
   "ItemId": 25735,
@@ -2233,7 +2249,7 @@
     { "Perks": [ { "Range": 5, "Type": 22, "Value": 4 } ] },
     { "Perks": [ { "SkillId": 7, "Type": 3, "Value": 1 } ] }
   ],
-  "Name": "Throw - Royal Star",
+  "Name": "Royal Star",
   "ProficiencyId": 159,
   "Version": 1,
   "ItemId": 25759,
@@ -3592,32 +3608,6 @@
 },
 {
   "Levels": [
-    { "Perks": [ { "Type": 20, "Value": 20 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 26, "Value": 0.07 }, { "Type": 11, "Value": 0.03 } ] },
-    { "Perks": [ { "BestiaryId": 2, "BestiaryName": "Aquatic", "Type": 6, "Value": 0.03 }, { "Type": 15, "Value": 0.15 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 25, "Value": 0.5 } ] }
-  ],
-  "Name": "Shimmer Wand",
-  "ProficiencyId": 351,
-  "Version": 4,
-  "ItemId": 12741,
-  "MarketCategory": 21
-},
-{
-  "Levels": [
-    { "Perks": [ { "Type": 20, "Value": 20 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 27, "Value": 0.07 }, { "Type": 11, "Value": 0.03 } ] },
-    { "Perks": [ { "BestiaryId": 2, "BestiaryName": "Aquatic", "Type": 6, "Value": 0.03 }, { "Type": 15, "Value": 0.15 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 25, "Value": 0.5 } ] }
-  ],
-  "Name": "Shimmer Rod",
-  "ProficiencyId": 352,
-  "Version": 4,
-  "ItemId": 12732,
-  "MarketCategory": 21
-},
-{
-  "Levels": [
     { "Perks": [ { "SkillId": 1, "Type": 25, "Value": 0.25 } ] },
     { "Perks": [ { "AugmentType": 2, "SpellId": 107, "Type": 5, "Value": 0.2 }, { "SkillId": 1, "Type": 25, "Value": 0.75 } ] },
     { "Perks": [ { "AugmentType": 14, "SpellId": 107, "Type": 5, "Value": 0.5 }, { "AugmentType": 16, "SpellId": 107, "Type": 5, "Value": 0.3 }, { "AugmentType": 15, "SpellId": 107, "Type": 5, "Value": 0.2 } ] },
@@ -3656,32 +3646,6 @@
   "Version": 1,
   "ItemId": 6553,
   "MarketCategory": 17
-},
-{
-  "Levels": [
-    { "Perks": [ { "Type": 21, "Value": 15 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 26, "Value": 0.07 }, { "Type": 0, "Value": 1 } ] },
-    { "Perks": [ { "BestiaryId": 2, "BestiaryName": "Aquatic", "Type": 6, "Value": 0.03 }, { "Type": 0, "Value": 1 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 25, "Value": 0.25 } ] }
-  ],
-  "Name": "Shimmer Bow",
-  "ProficiencyId": 356,
-  "Version": 2,
-  "ItemId": 12733,
-  "MarketCategory": 19
-},
-{
-  "Levels": [
-    { "Perks": [ { "Type": 21, "Value": 15 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 26, "Value": 0.07 }, { "Type": 0, "Value": 1 } ] },
-    { "Perks": [ { "BestiaryId": 2, "BestiaryName": "Aquatic", "Type": 6, "Value": 0.03 }, { "Type": 0, "Value": 1 } ] },
-    { "Perks": [ { "SkillId": 13, "Type": 25, "Value": 0.25 } ] }
-  ],
-  "Name": "Shimmer Sword",
-  "ProficiencyId": 357,
-  "Version": 2,
-  "ItemId": 12731,
-  "MarketCategory": 20
 },
 {
   "Levels": [
@@ -4636,7 +4600,7 @@
     { "Perks": [ { "AugmentType": 16, "SpellId": 61, "Type": 5, "Value": 0.4 } ] },
     { "Perks": [ { "AugmentType": 17, "SpellId": 61, "Type": 5, "Value": 0.075 } ] }
   ],
-  "Name": "Club 2H One Hit Wonder",
+  "Name": "one hit wonder",
   "ProficiencyId": 435,
   "Version": 1,
   "ItemId": 21219,

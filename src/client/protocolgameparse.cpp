@@ -6234,10 +6234,16 @@ void ProtocolGame::parseHighscores(const InputMessagePtr& msg)
 
 void ProtocolGame::parseWeaponProficiencyExperience(const InputMessagePtr& msg)
 {
-    msg->getU16(); // itemId
-    msg->getU32(); // Experience
-    msg->getU8(); // 1
+    const uint16_t itemId     = msg->getU16();
+    const uint32_t experience = msg->getU32();
+    msg->getU8(); // flag/unused
+
+    // manda perksTable como nil e categoria 0
+    g_lua.callGlobalField("g_game", "onWeaponProficiency",
+                          itemId, experience, 0, 0);
 }
+
+
 
 void ProtocolGame::parseWeaponProficiencyInfo(const InputMessagePtr& msg)
 {

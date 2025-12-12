@@ -82,7 +82,7 @@ local function safeGetThingType(item)
 
   -- Fix manual para sanguine bow
   if WEAPON_PROFICIENCY_FIX[itemId] then
-    print("Weapon Proficiency: Sanguine Bow FIX ativado para itemId", itemId)
+    
     return WEAPON_PROFICIENCY_FIX[itemId]
   end
 
@@ -99,7 +99,7 @@ local function safeGetThingType(item)
 end
 
 function WeaponProficiency:buildItemList()
-    print("Weapon Proficiency: buildItemList() (weaponType scan) called")
+    
 
     self.itemList = self.itemList or {}
 
@@ -140,7 +140,7 @@ function WeaponProficiency:buildItemList()
 end
 
 
-    print(string.format("Weapon Proficiency: buildItemList() - encontrados %d itens de arma via weaponType", totalWeapons))
+    
 end
 function WeaponProficiency:registerServerWeapon(itemId, marketCategory)
   self.itemList = self.itemList or {}
@@ -152,7 +152,7 @@ function WeaponProficiency:registerServerWeapon(itemId, marketCategory)
     self.itemList[self.ItemCategory.WeaponsAll] or {}
 
   if not marketCategory or marketCategory == 0 then
-    print("Weapon Proficiency: WARNING - server sent marketCategory 0 for itemId " .. itemId)
+    
     return
   end
 
@@ -166,14 +166,14 @@ function WeaponProficiency:registerServerWeapon(itemId, marketCategory)
   -- cria displayItem só para mostrar ícone
   local okItem, item = pcall(Item.create, itemId)
   if not okItem or not item or item:getId() == 0 then
-    print("Weapon Proficiency: WARNING - could not create item for itemId " .. itemId)
+    
     return
   end
 
   -- pega thingType via g_things (API deste client)
   local thingType = g_things.getThingType(itemId)
   if not thingType then
-    print("Weapon Proficiency: WARNING - could not get thingType for itemId " .. itemId)
+    
     return
   end
 
@@ -192,10 +192,7 @@ function WeaponProficiency:registerServerWeapon(itemId, marketCategory)
   table.insert(self.itemList[marketCategory], entry)
   table.insert(self.itemList[self.ItemCategory.WeaponsAll], entry)
 
-  print(string.format(
-    "Weapon Proficiency: registered server weapon itemId=%d, cat=%d",
-    itemId, marketCategory
-  ))
+
 end
 
 
@@ -270,14 +267,14 @@ function init()
     end)
 
     if not success or not window then
-        print("Weapon Proficiency: ERROR - Failed to load UI, module will not function properly")
+       
         return
     end
    
 
     WeaponProficiency.window            = window
     WeaponProficiency.displayItemPanel  = window:recursiveGetChildById("itemPanel")
-	print("Weapon Proficiency: Window successfully initialized:", WeaponProficiency.window)
+	
     WeaponProficiency.perkPanel         = window:recursiveGetChildById("bonusProgressBackground")
     WeaponProficiency.bonusDetailPanel  = window:recursiveGetChildById("bonusDetailBackground")
     WeaponProficiency.optionFilter      = window:recursiveGetChildById("classFilter")
@@ -295,7 +292,7 @@ function init()
     -- CRITICAL: callbacks diretos em g_game
     g_game.onWeaponProficiency       = onWeaponProficiency
     g_game.onProficiencyNotification = onProficiencyNotification
-    print("Weapon Proficiency: Callbacks registered DIRECTLY on g_game (before connect)")
+    
 
     -- e também via connect
     connect(g_game, {
@@ -305,7 +302,7 @@ function init()
         onWeaponProficiency     = onWeaponProficiency,
         onProficiencyNotification = onProficiencyNotification
     })
-    print("Weapon Proficiency: Callbacks also registered via connect()")
+    
 
         -- aqui só carrega o JSON quando o .dat carregar
     connect(g_things, { onLoadDat = loadProficiencyJson })
@@ -315,31 +312,26 @@ function init()
 
     -- comando de debug
     _G.wpdebug = function()
-        print("=== Weapon Proficiency Debug ===")
-        print("Module loaded: " .. tostring(modules.game_proficiency ~= nil))
+        
         if modules.game_proficiency then
-            print("Main button exists: " .. tostring(WeaponProficiency.mainButton ~= nil))
-            print("Top menu button exists: " .. tostring(WeaponProficiency.topMenuButton ~= nil))
+            
             if WeaponProficiency.mainButton then
-                print("Main button visible: " .. tostring(WeaponProficiency.mainButton:isVisible()))
-                print("Main button ID: " .. tostring(WeaponProficiency.mainButton:getId()))
+                
             end
             if WeaponProficiency.topMenuButton then
-                print("Top menu button visible: " .. tostring(WeaponProficiency.topMenuButton:isVisible()))
+                
             end
-            print("game_mainpanel available: " .. tostring(modules.game_mainpanel ~= nil))
-            print("client_topmenu available: " .. tostring(modules.client_topmenu ~= nil))
+            
         else
-            print("ERROR: Module game_proficiency is NOT loaded!")
+            
             local module = g_modules.getModule("game_proficiency")
             if module then
-                print("Module exists but not loaded. Is enabled: " .. tostring(module:isEnabled()))
-                print("Is loaded: " .. tostring(module:isLoaded()))
+                
             else
-                print("Module does not exist in module manager!")
+                
             end
         end
-        print("================================")
+        
     end
 
     -- limpar cache de experiência
@@ -347,43 +339,15 @@ function init()
         if WeaponProficiency then
             local cacheSize = table.size(WeaponProficiency.cacheList or {})
             WeaponProficiency.cacheList = {}
-            print("Weapon Proficiency: Cache cleared! (was " .. cacheSize .. " entries)")
-            print("All experience data has been removed from cache.")
-            print("The UI will now request fresh data from server when opened.")
+            
         else
-            print("Weapon Proficiency module not loaded!")
+            
         end
     end
 
-    -- cria botões depois que outros módulos carregarem
-    scheduleEvent(function()
-        createProficiencyButtons()
-    end, 200)
+  
 end
 
-function createProficiencyButtons()
-  if not WeaponProficiency.mainButton then
-    if modules.game_mainpanel and modules.game_mainpanel.addToggleButton then
-      WeaponProficiency.mainButton = modules.game_mainpanel.addToggleButton(
-        'weaponProficiencyButton',
-        tr('Weapon Proficiency'),
-        '/images/topbuttons/weaponProficiency',
-        function()
-          WeaponProficiency.toggle()
-        end,
-        false, 1
-      )
-      if WeaponProficiency.mainButton then
-        WeaponProficiency.mainButton:setOn(false)
-        print("Weapon Proficiency: Main panel button created successfully")
-      else
-        print("Weapon Proficiency: Failed to create main panel button")
-      end
-    else
-      print("Weapon Proficiency: game_mainpanel not available")
-    end
-  end
-end
 
 function terminate()
 	disconnect(g_game, {
@@ -411,7 +375,7 @@ function terminate()
 end
 
 function onGameStart()
-	print("Weapon Proficiency: ===== onGameStart CALLED =====")
+	
 	WeaponProficiency.allProficiencyRequested = false
 	WeaponProficiency.saveWeaponMissing = false
 	WeaponProficiency.firstItemRequested = nil
@@ -419,30 +383,30 @@ function onGameStart()
 	-- Ensure cacheList exists
 	if not WeaponProficiency.cacheList then
 		WeaponProficiency.cacheList = {}
-		print("Weapon Proficiency: Created cacheList in onGameStart")
+		
 	else
-		print("Weapon Proficiency: cacheList already exists in onGameStart, size: " .. table.size(WeaponProficiency.cacheList))
+		
 	end
 	
 	-- Verify callback is registered
 	if g_game.onWeaponProficiency then
-		print("Weapon Proficiency: onWeaponProficiency callback is registered")
+		
 	else
-		print("Weapon Proficiency: ERROR - onWeaponProficiency callback is NOT registered!")
+		
 		-- Try to register it again
 		g_game.onWeaponProficiency = onWeaponProficiency
-		print("Weapon Proficiency: Re-registered onWeaponProficiency callback")
+		
 	end
 	
 	-- Request all proficiency data from server after a short delay
 	-- This ensures the module is fully initialized and the callback is available
 	-- We do this because the automatic send during login might arrive before the module is ready
 	scheduleEvent(function()
-		print("Weapon Proficiency: Requesting all proficiency data from server (delayed request after login)")
+		
 		g_game.sendWeaponProficiencyAction(1) -- Request all weapons (action 1 = WEAPON_PROFICIENCY_LIST_INFO)
 		WeaponProficiency.allProficiencyRequested = true
 	end, 1000) -- 1 second delay to ensure module is ready
-	print("Weapon Proficiency: ===== onGameStart COMPLETED =====")
+	
 	
 	
 	
@@ -507,31 +471,33 @@ end
 
 
 function show()
-	if not WeaponProficiency.window then
-		print("Weapon Proficiency: ERROR - Window not initialized! Cannot show UI.")
-		return
-	end
-	
-	WeaponProficiency.window:show(true)
-	WeaponProficiency.window:raise()
-	WeaponProficiency.window:focus()
-	if WeaponProficiency.mainButton then
-		WeaponProficiency.mainButton:setOn(true)
-	end
-	if WeaponProficiency.topMenuButton then
-		WeaponProficiency.topMenuButton:setOn(true)
-	end
+  if not WeaponProficiency.window then
+    return
+  end
+
+  WeaponProficiency.window:show(true)
+  WeaponProficiency.window:raise()
+  WeaponProficiency.window:focus()
+
+  -- só controla o botão do top menu (se existir)
+  if WeaponProficiency.topMenuButton then
+    WeaponProficiency.topMenuButton:setOn(true)
+  end
 end
 
 function hide()
-	WeaponProficiency.window:hide()
-	if WeaponProficiency.mainButton then
-		WeaponProficiency.mainButton:setOn(false)
-	end
-	if WeaponProficiency.topMenuButton then
-		WeaponProficiency.topMenuButton:setOn(false)
-	end
+  if not WeaponProficiency.window then
+    return
+  end
+
+  WeaponProficiency.window:hide()
+
+  -- só controla o botão do top menu (se existir)
+  if WeaponProficiency.topMenuButton then
+    WeaponProficiency.topMenuButton:setOn(false)
+  end
 end
+
 
 function getUnknownMarketCategory(item)
 	if not item then
@@ -616,7 +582,7 @@ end
 
 function WeaponProficiency.toggle()
   if not WeaponProficiency.window then
-    print("Weapon Proficiency: ERROR - Window not initialized!")
+    
     return
   end
 
@@ -638,7 +604,7 @@ if not _G.weaponproficiency then
 		if modules.game_proficiency then
 			modules.game_proficiency.toggle()
 		else
-			print("Weapon Proficiency module not loaded!")
+			
 		end
 	end
 end
@@ -652,32 +618,26 @@ end
 
 -- Debug command to check button status (register immediately, even if module not loaded)
 _G.wpdebug = function()
-	print("=== Weapon Proficiency Debug ===")
-	print("Module loaded: " .. tostring(modules.game_proficiency ~= nil))
+	
 	if modules.game_proficiency then
-		print("Main button exists: " .. tostring(WeaponProficiency.mainButton ~= nil))
-		print("Top menu button exists: " .. tostring(WeaponProficiency.topMenuButton ~= nil))
+		
 		if WeaponProficiency.mainButton then
-			print("Main button visible: " .. tostring(WeaponProficiency.mainButton:isVisible()))
-			print("Main button ID: " .. tostring(WeaponProficiency.mainButton:getId()))
+			
 		end
 		if WeaponProficiency.topMenuButton then
-			print("Top menu button visible: " .. tostring(WeaponProficiency.topMenuButton:isVisible()))
+			
 		end
-		print("game_mainpanel available: " .. tostring(modules.game_mainpanel ~= nil))
-		print("client_topmenu available: " .. tostring(modules.client_topmenu ~= nil))
+		
 	else
-		print("ERROR: Module game_proficiency is NOT loaded!")
-		print("Checking if module exists...")
+		
 		local module = g_modules.getModule("game_proficiency")
 		if module then
-			print("Module exists but not loaded. Is enabled: " .. tostring(module:isEnabled()))
-			print("Is loaded: " .. tostring(module:isLoaded()))
+			
 		else
-			print("Module does not exist in module manager!")
+			
 		end
 	end
-	print("================================")
+	
 end
 
 function sortWeaponProficiency(marketCategory)
@@ -699,7 +659,7 @@ end
 
 function WeaponProficiency:requestOpenWindow(redirectItem)
     if not WeaponProficiency.window then
-        print("Weapon Proficiency: ERROR - Window not initialized! Cannot open UI.")
+        
         return
     end
 
@@ -728,11 +688,8 @@ function WeaponProficiency:requestOpenWindow(redirectItem)
 
     WeaponProficiency:onClearSearch(true)
     WeaponProficiency:onWeaponCategoryChange(category, nil, targetItemId, focusFirstChild)
-
-    print("Weapon Proficiency: Calling show()...")
-    show()
-    print("Weapon Proficiency: show() completed, window should be visible now")
-end
+        show()
+   end
 
 
 function onInspection(inspectType, itemName, item, descriptions)
@@ -786,7 +743,7 @@ function onInventoryChange(player, slot, item, oldItem)
     -- Handle weapon equipped - WORKS FOR ALL WEAPONS
     if item then
       local itemId = item:getId()
-      print("Weapon Proficiency: onInventoryChange - Item equipped in slot " .. slot .. ", itemId: " .. itemId)
+      
 
       -- Usa safeGetThingType (com fix do sanguine bow)
       local thingType = safeGetThingType(item)
@@ -808,7 +765,7 @@ function onInventoryChange(player, slot, item, oldItem)
 
         if weaponType and weaponType ~= WEAPON_SHIELD then
           -- IMPORTANT: Always request fresh data from server database when equipping ANY weapon
-          print("Weapon Proficiency: Weapon equipped (itemId: " .. itemId .. ", weaponType: " .. weaponType .. ") - requesting fresh data from server database")
+          
           g_game.sendWeaponProficiencyAction(0, itemId) -- 0 = WEAPON_PROFICIENCY_ITEM_INFO
 
           -- UI will update automatically when server responds via onWeaponProficiency callback
@@ -817,21 +774,21 @@ function onInventoryChange(player, slot, item, oldItem)
             if itemWidget then
               local currentItem = itemWidget:getItem()
               if currentItem and currentItem:getId() == itemId then
-                print("Weapon Proficiency: UI is showing equipped weapon " .. itemId .. " - will update automatically when server responds")
+                
               end
             end
           end
         else
-          print("Weapon Proficiency: Item " .. itemId .. " is not a weapon (weaponType: " .. (weaponType or "nil") .. ") - skipping proficiency update")
+          
         end
       else
-        print("Weapon Proficiency: Could not get thingType for item " .. itemId .. " - skipping proficiency update (after safeGetThingType)")
+        
       end
 
     elseif oldItem then
       -- Weapon was unequipped - WORKS FOR ALL WEAPONS
       local oldItemId = oldItem:getId()
-      print("Weapon Proficiency: onInventoryChange - Weapon unequipped from slot " .. slot .. ", itemId: " .. oldItemId)
+      
 
       -- If UI is open and showing this weapon, request fresh data from server
       if WeaponProficiency.window and WeaponProficiency.window:isVisible() then
@@ -839,7 +796,7 @@ function onInventoryChange(player, slot, item, oldItem)
         if itemWidget then
           local currentItem = itemWidget:getItem()
           if currentItem and currentItem:getId() == oldItemId then
-            print("Weapon Proficiency: UI is showing unequipped weapon " .. oldItemId .. " - requesting fresh data from server database")
+            
             g_game.sendWeaponProficiencyAction(0, oldItemId) -- Request fresh data from server
           end
         end
@@ -1198,7 +1155,7 @@ function WeaponProficiency:createItemCache()
         self.itemList[cat] = self.itemList[cat] or {}
     end
 
-    print("Weapon Proficiency: createItemCache() stub - listas vazias inicializadas (sem getProficiencyThings).")
+    
 end
 
 function WeaponProficiency:onItemListValueChange(scroll, value, delta)
@@ -1321,9 +1278,9 @@ end
 
 function WeaponProficiency:onWeaponCategoryChange(text, itemId, thing, fromServer, forceUpdate)
     -- text = "Weapons: Axes" / "Weapons: All" etc. vindo do ComboBox
-    print("DEBUG onWeaponCategoryChange: self.window =", self.window)  -- <-- adiciona isso
+    
     if not self.window then
-        print("Weapon Proficiency: ERROR - Window not initialized in onWeaponCategoryChange")
+        
         return
     end
 
@@ -1337,8 +1294,7 @@ function WeaponProficiency:onWeaponCategoryChange(text, itemId, thing, fromServe
 
     -- Garante que a tabela de mapeamento existe
     if not WeaponStringToCategory then
-        print("Weapon Proficiency: ERROR - WeaponStringToCategory is nil!")
-        print("Weapon Proficiency: text received = " .. tostring(selected))
+        
         self.isProcessingCategoryChange = false
         return
     end
@@ -2138,77 +2094,77 @@ function WeaponProficiency:onClearSearch()
 end
 
 function WeaponProficiency:onApplyChanges(button, targetItem)
-	if button and not button:isOn() then return end
+    if button and not button:isOn() then
+        return
+    end
 
-	local currentItem = nil
-	if targetItem then
-		currentItem = targetItem
-	elseif WeaponProficiency.displayItemPanel then
-		local itemWidget = WeaponProficiency.displayItemPanel:getChildById("item")
-		if itemWidget then
-			currentItem = itemWidget:getItem()
-		end
-	end
+    local currentItem = nil
+    if targetItem then
+        currentItem = targetItem
+    elseif WeaponProficiency.displayItemPanel then
+        local itemWidget = WeaponProficiency.displayItemPanel:getChildById("item")
+        if itemWidget then
+            currentItem = itemWidget:getItem()
+        end
+    end
 
-	if not currentItem then
-		return
-	end
+    if not currentItem then
+        return
+    end
 
-	local toSend = {}
-	for i, child in ipairs(self.perkPanel:getChildren()) do
-		for k, v in pairs(child.currentPerkPanel:getChildren()) do
-			if not v.blocked and v.active then 
-				toSend[i - 1] = k - 1
-			end
-		end
-	end
+    local toSend = {}
+    for i, child in ipairs(self.perkPanel:getChildren()) do
+        for k, v in pairs(child.currentPerkPanel:getChildren()) do
+            if not v.blocked and v.active then
+                toSend[i - 1] = k - 1
+            end
+        end
+    end
 
-	if table.empty(toSend) then
-		g_game.sendWeaponProficiencyAction(2, currentItem:getId())
-		self.cacheList[currentItem:getId()].perks = {}
-	else
-		g_game.sendWeaponProficiencyApply(currentItem:getId(), toSend)
-	end
+    if table.empty(toSend) then
+        g_game.sendWeaponProficiencyAction(2, currentItem:getId())
+        self.cacheList[currentItem:getId()].perks = {}
+    else
+        g_game.sendWeaponProficiencyApply(currentItem:getId(), toSend)
+    end
 
-	-- Lock perks after saving
-	for i, child in ipairs(self.perkPanel:getChildren()) do
-		for k, v in pairs(child.currentPerkPanel:getChildren()) do
-			if v.active then
-				local lockedIcon = v:getChildById("locked-perk")
-				if lockedIcon then
-					lockedIcon:setVisible(true)
-				end
-				v.locked = true
-			end
-		end
-	end
+    -- Lock perks after saving
+    for _, child in ipairs(self.perkPanel:getChildren()) do
+        for _, v in pairs(child.currentPerkPanel:getChildren()) do
+            if v.active then
+                local lockedIcon = v:getChildById("locked-perk")
+                if lockedIcon then
+                    lockedIcon:setVisible(true)
+                end
+                v.locked = true
+            end
+        end
+    end
 
-	-- Update cache with the new perks that were just applied
-	local itemId = currentItem:getId()
-	if not self.cacheList[itemId] then
-		self.cacheList[itemId] = {exp = 0, perks = {}}
-	end
-	
-	-- Convert toSend to the cache format (level -> position mapping)
-	local cachePerks = {}
-	for level, position in pairs(toSend) do
-		cachePerks[level] = position
-	end
-	self.cacheList[itemId].perks = cachePerks
-	
-	-- Update UI buttons state
-	self.window:getChildById("apply"):setOn(false)
-	self.window:getChildById("ok"):setOn(false)
-	self.window:getChildById("close"):setText("Close")
-	self.saveWeaponMissing = false
-	
-	-- IMPORTANT: If "OK" button was clicked, close the window after applying changes
-	-- This saves the changes and closes the UI in one action
-	if button and button:getId() == "ok" then
-		print("Weapon Proficiency: OK button clicked - changes applied, closing window...")
-		self:hide()
-	end
+    -- Update cache with the new perks that were just applied
+    local itemId = currentItem:getId()
+    if not self.cacheList[itemId] then
+        self.cacheList[itemId] = { exp = 0, perks = {} }
+    end
+
+    local cachePerks = {}
+    for level, position in pairs(toSend) do
+        cachePerks[level] = position
+    end
+    self.cacheList[itemId].perks = cachePerks
+
+    -- Update UI buttons state
+    self.window:getChildById("apply"):setOn(false)
+    self.window:getChildById("ok"):setOn(false)
+    self.window:getChildById("close"):setText("Close")
+    self.saveWeaponMissing = false
+
+    -- If OK button was clicked, apenas loga (não fecha a janela)
+    if button and button:getId() == "ok" then
+        print("Weapon Proficiency: OK button clicked - changes applied (window remains open)")
+    end
 end
+
 
 function WeaponProficiency:onResetWeapon(button)
 	if not WeaponProficiency.window or not WeaponProficiency.displayItemPanel then
@@ -2462,9 +2418,11 @@ function WeaponProficiency:checkPerksMatch(itemId)
 end
 
 function onWeaponProficiency(itemId, experience, perksTable, marketCategory)
-    print("Weapon Proficiency: ===== onWeaponProficiency CALLED =====")
-    print("Weapon Proficiency: itemId: " .. tostring(itemId) .. ", experience: " .. tostring(experience) .. ", marketCategory: " .. tostring(marketCategory))
-    print("Weapon Proficiency: perksTable type: " .. type(perksTable) .. ", size: " .. tostring(perksTable and #perksTable or 0))
+      if type(perksTable) ~= 'table' then
+        perksTable = {}
+    end
+    marketCategory = marketCategory or 0	
+	
 
     -- registra arma vinda do servidor na lista da UI
     if WeaponProficiency and WeaponProficiency.registerServerWeapon then
