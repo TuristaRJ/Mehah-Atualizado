@@ -1,12 +1,21 @@
 dofile('const.lua')
 
--- FIX SANGUINE BOW - Crystal 15.x
 local WEAPON_PROFICIENCY_FIX = {
   [43877] = {
     name = "sanguine bow",
     weaponType = WEAPON_BOW
+  },
+  [43864] = {
+    name = "sanguine blade",
+    weaponType = WEAPON_SWORD
+  },
+  [43874] = {
+    name = "sanguine battleaxe",
+    weaponType = WEAPON_AXE
   }
 }
+
+
 
 if not WeaponProficiency then
     WeaponProficiency = {}
@@ -103,29 +112,33 @@ function WeaponProficiency:buildItemList()
     local minId, maxId = 100, 30000
 
     for id = minId, maxId do
-        local okItem, item = pcall(Item.create, id)
-        if okItem and item and item:getId() ~= 0 then
-            local okType, thingType = pcall(item.getThingType, item)
-            if okType and thingType then
-                local okW, weaponType = pcall(thingType.getWeaponType, thingType)
-                if okW and weaponType and weaponType ~= WEAPON_NONE then
-                    local cat = UnknownCategories[weaponType]
-                    if cat then
-                        local okMD, marketData = pcall(thingType.getMarketData, thingType)
-                        local entry = {
-                            displayItem = item,
-                            marketData  = okMD and marketData or { name = "", showAs = id },
-                        }
-
-                        self.itemList[cat] = self.itemList[cat] or {}
-                        table.insert(self.itemList[cat], entry)
-                        table.insert(self.itemList[self.ItemCategory.WeaponsAll], entry)
-                        totalWeapons = totalWeapons + 1
-                    end
-                end
-            end
+  local okItem, item = pcall(Item.create, id)
+  if okItem and item and item:getId() ~= 0 then
+    local thingType = safeGetThingType(item)
+    if thingType then
+      local okW, weaponType = pcall(function()
+        return thingType.getWeaponType and thingType:getWeaponType() or thingType.weaponType
+      end)
+      if okW and weaponType and weaponType ~= WEAPON_NONE then
+        local cat = UnknownCategories[weaponType]
+        if cat then
+          local okMD, marketData = pcall(function()
+            return thingType.getMarketData and thingType:getMarketData() or { name = WEAPON_PROFICIENCY_FIX[id] and WEAPON_PROFICIENCY_FIX[id].name or "", showAs = id }
+          end)
+          local entry = {
+            displayItem = item,
+            marketData  = okMD and marketData or { name = "", showAs = id },
+          }
+          self.itemList[cat] = self.itemList[cat] or {}
+          table.insert(self.itemList[cat], entry)
+          table.insert(self.itemList[self.ItemCategory.WeaponsAll], entry)
+          totalWeapons = totalWeapons + 1
         end
+      end
     end
+  end
+end
+
 
     print(string.format("Weapon Proficiency: buildItemList() - encontrados %d itens de arma via weaponType", totalWeapons))
 end

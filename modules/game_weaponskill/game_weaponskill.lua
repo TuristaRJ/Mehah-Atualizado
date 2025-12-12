@@ -1,13 +1,20 @@
 local weaponProficiencies = {}
 
--- FIX SANGUINE BOW - Crystal Server 15.x (VERSÃO 2 - FUNCIONA)
 local WEAPON_PROFICIENCY_FIX = {
   [43877] = {
     name = "sanguine bow",
-    marketCategory = 9,  -- Bows
-    iconId = 43877
+    weaponType = WEAPON_BOW
+  },
+  [43864] = {
+    name = "sanguine blade",
+    weaponType = WEAPON_SWORD
+  },
+  [43874] = {
+    name = "sanguine battleaxe",
+    weaponType = WEAPON_AXE
   }
 }
+
 
 -- NOVA FUNÇÃO safeGetThingType (substitui TODAS as chamadas)
 local function safeGetThingType(itemId)
