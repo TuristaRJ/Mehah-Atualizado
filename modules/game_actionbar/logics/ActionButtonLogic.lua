@@ -36,6 +36,15 @@ local function canUseSpellVocation(spellVocations, playerVocation, spellId)
                 [86]=true, [117]=true, [196]=true, [266]=true, [260]=true, [243]=true, [244]=true, [240]=true
         }
         return allowedSorcererSpells[spellId] and true or false
+    elseif (vocToCheck == 4 or vocToCheck == 14) then
+        local allowedDruidSpells = {
+                [248]=true, [169]=true, [29]=true, [38]=true, [144]=true, [145]=true, [146]=true, [88]=true, [142]=true, [42]=true, [84]=true, [128]=true, [112]=true, [121]=true, [173]=true, [45]=true, [81]=true, [10]=true, [1]=true,
+                [172]=true, [76]=true, [44]=true, [82]=true, [152]=true, [43]=true, [39]=true, [153]=true, [9]=true, [113]=true, [174]=true, [120]=true, [3]=true, [156]=true, [75]=true, [157]=true, [6]=true, [11]=true, [20]=true,
+                [89]=true, [2]=true, [118]=true, [56]=true, [245]=true, [26]=true, [7]=true, [25]=true, [27]=true, [77]=true, [8]=true, [91]=true, [17]=true, [50]=true, [32]=true, [18]=true, [28]=true, [33]=true, [31]=true, [4]=true, [5]=true, [12]=true,
+                [83]=true, [14]=true, [30]=true, [78]=true, [94]=true, [54]=true, [114]=true, [115]=true, [116]=true, [197]=true, [267]=true, [262]=true, [263]=true, [242]=true
+
+        }
+        return allowedDruidSpells[spellId] and true or false
     end
     if spellId and AllowedSpellsByClass and AllowedSpellsByClass[spellId] then
         return AllowedSpellsByClass[spellId][vocToCheck] and true or false
