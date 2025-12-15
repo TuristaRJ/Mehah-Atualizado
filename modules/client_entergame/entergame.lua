@@ -155,6 +155,14 @@ function EnterGame.init()
     EnterGame.setAccountName(account)
     EnterGame.setPassword(password)
 
+    -- Marcar checkbox de lembrar login se houver dados salvos
+    local rememberBox = enterGame:getChildById('rememberEmailBox')
+    if account and #account > 0 and password and #password > 0 then
+        rememberBox:setChecked(true)
+    else
+        rememberBox:setChecked(false)
+    end
+
     enterGame:getChildById('serverHostTextEdit'):setText(host)
     enterGame:getChildById('serverPortTextEdit'):setText(port)
     enterGame:getChildById('autoLoginBox'):setChecked(autologin)

@@ -1,0 +1,1175 @@
+
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "DamageType": 32,
+            "Type": 4,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 14,
+            "Value": 0.015
+          },
+          {
+            "SkillId": 1,
+            "Type": 26,
+            "Value": 0.015
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 20,
+            "Value": 15
+          },
+          {
+            "Type": 10,
+            "Value": 0.005
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 16,
+            "SpellId": 119,
+            "Type": 5,
+            "Value": 0.025
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 10,
+            "BestiaryName": "Human",
+            "Type": 6,
+            "Value": 0.02
+          }
+        ]
+      }
+    ],
+    "Name": "Wand 1H Ferumbras' Staff (Failed)",
+    "ProficiencyId": 441,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "SkillId": 1,
+            "Type": 3,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 14,
+            "Value": 0.03
+          },
+          {
+            "SkillId": 1,
+            "Type": 26,
+            "Value": 0.03
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 20,
+            "Value": 30
+          },
+          {
+            "Type": 10,
+            "Value": 0.01
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 16,
+            "SpellId": 119,
+            "Type": 5,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 10,
+            "BestiaryName": "Human",
+            "Type": 6,
+            "Value": 0.04
+          }
+        ]
+      }
+    ],
+    "Name": "Wand 1H Ferumbras' Staff (Enchanted)",
+    "ProficiencyId": 442,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 2,
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 8,
+            "Type": 25,
+            "Value": 0.35
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 15,
+            "Value": 0.4
+          },
+          {
+            "Type": 21,
+            "Value": 15
+          }
+        ]
+      }
+    ],
+    "Name": "Sword 1H Ripper's Sabre",
+    "ProficiencyId": 443,
+    "Version": 1
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 2,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 8,
+            "Type": 25,
+            "Value": 0.04
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 11,
+            "Value": 0.02
+          },
+          {
+            "Type": 20,
+            "Value": 7
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 8,
+            "Type": 26,
+            "Value": 0.02
+          }
+        ]
+      }
+    ],
+    "Name": "Sword 1H Ritual Bone Knife",
+    "ProficiencyId": 444,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 0,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 0,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 0,
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 20,
+            "BestiaryName": "Extra Dimensional",
+            "Type": 6,
+            "Value": 0.01
+          }
+        ]
+      }
+    ],
+    "Name": "Axe 2H Broken Iks Spear",
+    "ProficiencyId": 445,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 15,
+            "Value": 0.02
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 15,
+            "Value": 0.03
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 15,
+            "Value": 0.04
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 15,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 15,
+            "Value": 0.06
+          }
+        ]
+      }
+    ],
+    "Name": "Club 1H Mallet Handle",
+    "ProficiencyId": 446,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Range": 3,
+            "Type": 22,
+            "Value": 10
+          },
+          {
+            "AugmentType": 14,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.05
+          },
+          {
+            "Type": 12,
+            "Value": 0.04
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 15,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.02
+          },
+          {
+            "Type": 12,
+            "Value": 0.08
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 16,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.2
+          },
+          {
+            "AugmentType": 2,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.04
+          },
+          {
+            "Type": 7,
+            "Value": 0.03
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.1
+          },
+          {
+            "AugmentType": 17,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.03
+          },
+          {
+            "Type": 0,
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 12,
+            "Value": 0.1
+          },
+          {
+            "SkillId": 1,
+            "Type": 27,
+            "Value": 2.0
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 8,
+            "Value": 0.02
+          }
+        ]
+      }
+    ],
+    "Name": "Sanguine 2H Crossbow",
+    "ProficiencyId": 447,
+    "Version": 2
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 19,
+            "Value": 10
+          },
+          {
+            "Range": 4,
+            "Type": 22,
+            "Value": 10
+          },
+          {
+            "Type": 12,
+            "Value": 0.04
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 21,
+            "BestiaryName": "Inkborn",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "SkillId": 1,
+            "Type": 27,
+            "Value": 0.75
+          },
+          {
+            "Type": 12,
+            "Value": 0.06
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "DamageType": 128,
+            "Type": 4,
+            "Value": 1
+          },
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.05
+          },
+          {
+            "SkillId": 1,
+            "Type": 27,
+            "Value": 1.25
+          },
+          {
+            "Type": 0,
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 12,
+            "Value": 0.08
+          },
+          {
+            "Type": 18,
+            "Value": 7
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 8,
+            "Value": 0.01
+          }
+        ]
+      }
+    ],
+    "Name": "Soul 2H Crossbow",
+    "ProficiencyId": 448,
+    "Version": 3
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 1,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 8,
+            "Type": 25,
+            "Value": 0.08
+          },
+          {
+            "Type": 15,
+            "Value": 0.1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 21,
+            "Value": 10
+          },
+          {
+            "Type": 7,
+            "Value": 0.03
+          },
+          {
+            "Type": 20,
+            "Value": 5
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 21,
+            "Value": 20
+          },
+          {
+            "BestiaryId": 16,
+            "BestiaryName": "Reptile",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "Type": 20,
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 11,
+            "Value": 0.03
+          }
+        ]
+      }
+    ],
+    "Name": "Sword 2H Tagralt Blade",
+    "ProficiencyId": 449,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Range": 3,
+            "Type": 22,
+            "Value": 10
+          },
+          {
+            "AugmentType": 14,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.05
+          },
+          {
+            "Type": 12,
+            "Value": 0.04
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 15,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.04
+          },
+          {
+            "Type": 12,
+            "Value": 0.08
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 16,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.4
+          },
+          {
+            "AugmentType": 2,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.08
+          },
+          {
+            "Type": 7,
+            "Value": 0.03
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.1
+          },
+          {
+            "AugmentType": 17,
+            "SpellId": 124,
+            "Type": 5,
+            "Value": 0.03
+          },
+          {
+            "Type": 0,
+            "Value": 2
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 12,
+            "Value": 0.1
+          },
+          {
+            "SkillId": 1,
+            "Type": 27,
+            "Value": 2.0
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 8,
+            "Value": 0.03
+          }
+        ]
+      }
+    ],
+    "Name": "Grand Sanguine 2H Crossbow",
+    "ProficiencyId": 450,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Range": 3,
+            "Type": 22,
+            "Value": 10
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.12
+          },
+          {
+            "Type": 19,
+            "Value": 8
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 11,
+            "BestiaryName": "Humanoid",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "Type": 11,
+            "Value": 0.03
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.05
+          },
+          {
+            "Type": 18,
+            "Value": 5
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.1
+          }
+        ]
+      }
+    ],
+    "Name": "Master Umbral 2H Crossbow",
+    "ProficiencyId": 451,
+    "Version": 2
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Range": 3,
+            "Type": 22,
+            "Value": 7
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.08
+          },
+          {
+            "Type": 19,
+            "Value": 6
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 11,
+            "BestiaryName": "Humanoid",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "Type": 11,
+            "Value": 0.02
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          },
+          {
+            "Type": 20,
+            "Value": 3
+          }
+        ]
+      }
+    ],
+    "Name": "Umbral 2H Crossbow",
+    "ProficiencyId": 452,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Range": 3,
+            "Type": 22,
+            "Value": 5
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.05
+          },
+          {
+            "Type": 19,
+            "Value": 4
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "BestiaryId": 11,
+            "BestiaryName": "Humanoid",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "Type": 11,
+            "Value": 0.015
+          }
+        ]
+      }
+    ],
+    "Name": "Crude Umbral 2H Crossbow",
+    "ProficiencyId": 453,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 12,
+            "Value": 0.48
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.1
+          },
+          {
+            "Type": 15,
+            "Value": 0.1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 8,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 14,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.1
+          },
+          {
+            "AugmentType": 15,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          },
+          {
+            "BestiaryId": 15,
+            "BestiaryName": "Plant",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "DamageType": 128,
+            "Type": 4,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 7,
+            "Value": 0.03
+          },
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.05
+          },
+          {
+            "AugmentType": 6,
+            "SpellId": 238,
+            "Type": 5,
+            "Value": -2.0
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 17,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.015
+          }
+        ]
+      }
+    ],
+    "Name": "Rending Inferniarch 2H Crossbow",
+    "ProficiencyId": 454,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 16,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.1
+          },
+          {
+            "Type": 15,
+            "Value": 0.1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 16,
+            "Value": 0.05
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 14,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.1
+          },
+          {
+            "AugmentType": 16,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.08
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          },
+          {
+            "BestiaryId": 15,
+            "BestiaryName": "Plant",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "DamageType": 128,
+            "Type": 4,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 7,
+            "Value": 0.03
+          },
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.05
+          },
+          {
+            "AugmentType": 6,
+            "SpellId": 238,
+            "Type": 5,
+            "Value": -2.0
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 17,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.015
+          }
+        ]
+      }
+    ],
+    "Name": "Siphoning Inferniarch 2H Crossbow",
+    "ProficiencyId": 455,
+    "Version": 1
+  },
+  {
+    "Levels": [
+      {
+        "Perks": [
+          {
+            "Type": 17,
+            "Value": 0.145
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 25,
+            "Value": 0.1
+          },
+          {
+            "Type": 15,
+            "Value": 0.1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 17,
+            "Value": 0.145
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 15,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.05
+          },
+          {
+            "AugmentType": 16,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.08
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "SkillId": 7,
+            "Type": 3,
+            "Value": 1
+          },
+          {
+            "BestiaryId": 15,
+            "BestiaryName": "Plant",
+            "Type": 6,
+            "Value": 0.03
+          },
+          {
+            "DamageType": 128,
+            "Type": 4,
+            "Value": 1
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "Type": 7,
+            "Value": 0.03
+          },
+          {
+            "SkillId": 7,
+            "Type": 26,
+            "Value": 0.05
+          },
+          {
+            "AugmentType": 6,
+            "SpellId": 238,
+            "Type": 5,
+            "Value": -2.0
+          }
+        ]
+      },
+      {
+        "Perks": [
+          {
+            "AugmentType": 17,
+            "SpellId": 57,
+            "Type": 5,
+            "Value": 0.015
+          }
+        ]
+      }
+    ],
+    "Name": "Draining Inferniarch 2H Crossbow",
+    "ProficiencyId": 456,
+    "Version": 1
+  }
+]
