@@ -74,16 +74,19 @@ function assignSpell(button)
             if (playerVocation == 9 or playerVocation == 10) and spellId ~= 81 then
                 return false
             end
+            -- Equivalência para sorcerer/master sorcerer: 3/13 são tratados como 1/5
+            local sorcEquiv = {[3]=1, [13]=5}
+            local vocToCheck = sorcEquiv[playerVocation] or playerVocation
             -- Verificação por AllowedSpellsByClass (id+classe)
             if spellId and AllowedSpellsByClass and AllowedSpellsByClass[spellId] then
-                if AllowedSpellsByClass[spellId][playerVocation] then
+                if AllowedSpellsByClass[spellId][vocToCheck] then
                     return true
                 else
                     return false
                 end
             end
             -- Verificação direta
-            if table.find(spellVocations, playerVocation) then
+            if table.find(spellVocations, vocToCheck) then
                 return true
             end
             -- Verificação de vocação customizada (Monk/Exalted Monk)
@@ -106,8 +109,8 @@ function assignSpell(button)
                 if (playerVocation == 1 or playerVocation == 11) then
                     local allowedKnightSpells = {
                         [248]=true, [29]=true, [62]=true, [80]=true, [133]=true, [61]=true, [131]=true, [144]=true, [20]=true, [105]=true, [59]=true, [11]=true, [106]=true, [6]=true, [141]=true, [160]=true, [158]=true, [81]=true,
-                       [10]=true, [1]=true, [76]=true, [132]=true, [159]=true, [126]=true, [107]=true, [170]=true, [123]=true, [271]=true, [237]=true, [239]=true,
-                       [194]=true, [264]=true, [261]=true, [93]=true
+                        [10]=true, [1]=true, [76]=true, [132]=true, [159]=true, [126]=true, [107]=true, [170]=true, [123]=true, [271]=true, [237]=true, [239]=true,
+                        [194]=true, [264]=true, [261]=true, [93]=true
 
 
                     }
@@ -115,7 +118,13 @@ function assignSpell(button)
                 elseif (playerVocation == 8 or playerVocation == 5 or playerVocation == 9 or playerVocation == 10) then
                     canShow = (spellData.id == 81)
                 elseif (playerVocation == 3 or playerVocation == 13) then
-                    canShow = (spellData.id == 82)
+                    local allowedSorcererSpells = {
+                        [248]=true, [169]=true, [177]=true, [29]=true, [139]=true, [87]=true, [88]=true, [38]=true, [140]=true, [129]=true, [22]=true, [13]=true, [138]=true, [45]=true, [81]=true, [10]=true, [1]=true, [172]=true, [149]=true,
+                        [76]=true, [44]=true, [119]=true, [151]=true, [150]=true, [39]=true, [3]=true, [155]=true, [154]=true, [75]=true, [6]=true, [11]=true, [20]=true, [19]=true, [178]=true, [89]=true, [23]=true, [24]=true, [2]=true,
+                        [92]=true, [245]=true, [26]=true, [7]=true, [25]=true, [15]=true, [27]=true, [77]=true, [16]=true, [8]=true, [17]=true, [50]=true, [32]=true, [18]=true, [28]=true, [55]=true, [33]=true, [21]=true, [83]=true, [30]=true, [78]=true,
+                        [86]=true, [117]=true, [196]=true, [266]=true, [260]=true, [243]=true, [244]=true, [240]=true
+                    }
+                    canShow = allowedSorcererSpells[spellData.id] or false
                 elseif (playerVocation == 4 or playerVocation == 14) then
                     canShow = (spellData.id == 85 or spellData.id == 36)
                 elseif (playerVocation == 2 or playerVocation == 12) then
