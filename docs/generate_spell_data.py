@@ -301,7 +301,7 @@ MAP_ICON_INDEX: Dict[str, Tuple[Optional[int], Optional[int]]] = {
     "exori mas nia": (182, 294),
     "exori gran mas nia": (183, 295),
     "exura mas nia": (184, 296),
-    "exura tio sio": (185, 297),
+    "exura tio sio": (160, 297),
 }
 
 

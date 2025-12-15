@@ -104,7 +104,14 @@ function assignSpell(button)
                 local canShow
                 -- Monk e Exalted Monk só podem ver a spell id 81 no assign, mesmo com showAll
                 if (playerVocation == 1 or playerVocation == 11) then
-                    canShow = (spellData.id == 80)
+                    local allowedKnightSpells = {
+                        [248]=true, [29]=true, [62]=true, [80]=true, [133]=true, [61]=true, [131]=true, [144]=true, [20]=true, [105]=true, [59]=true, [11]=true, [106]=true, [6]=true, [141]=true, [160]=true, [158]=true, [81]=true,
+                       [10]=true, [1]=true, [76]=true, [132]=true, [159]=true, [126]=true, [107]=true, [170]=true, [123]=true, [271]=true, [237]=true, [239]=true,
+                       [194]=true, [264]=true, [261]=true, [93]=true
+
+
+                    }
+                    canShow = allowedKnightSpells[spellData.id] or false
                 elseif (playerVocation == 8 or playerVocation == 5 or playerVocation == 9 or playerVocation == 10) then
                     canShow = (spellData.id == 81)
                 elseif (playerVocation == 3 or playerVocation == 13) then

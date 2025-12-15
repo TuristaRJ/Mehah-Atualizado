@@ -15,11 +15,20 @@ local customVocationMapping = {
 
 
 -- Função auxiliar para verificar se o player pode usar a spell (considerando vocações customizadas)
+
 local function canUseSpellVocation(spellVocations, playerVocation, spellId)
+    -- Sincroniza com a lógica do assignSpell para knights
+    if (playerVocation == 1 or playerVocation == 11) then
+        local allowedKnightSpells = {
+            [248]=true, [29]=true, [62]=true, [80]=true, [133]=true, [61]=true, [131]=true, [144]=true, [20]=true, [105]=true, [59]=true, [11]=true, [106]=true, [6]=true, [141]=true, [160]=true, [158]=true, [81]=true,
+            [10]=true, [1]=true, [76]=true, [132]=true, [159]=true, [126]=true, [107]=true, [170]=true, [123]=true, [271]=true, [237]=true, [239]=true,
+            [194]=true, [264]=true, [261]=true, [93]=true
+        }
+        return allowedKnightSpells[spellId] and true or false
+    end
     if spellId and AllowedSpellsByClass and AllowedSpellsByClass[spellId] then
         return AllowedSpellsByClass[spellId][playerVocation] and true or false
     end
-    -- Se não houver configuração, não bloquear tudo
     return false
 end
 
@@ -90,37 +99,10 @@ local function getItemNameById(itemId)
 end
 
 local function playerCanUseSpell(spellData)
-  if not g_game.isOnline() then return end
-  if not spellData then return false end
+    if not g_game.isOnline() then return false end
+    if not spellData then return false end
 
-
- 
-  
-  if spellData.vocations then
-    local voc = player:getVocation()
-
-  end
-
-  if spellData.needLearn and not spellListData[tostring(spellData.id)] then
-
-    return false
-  end
-
-  if spellData.mana and player:getMana() < spellData.mana then
-
-    return false
-  end
-
-  if spellData.level and player:getLevel() < spellData.level then
-
-    return false
-  end
-
-  if spellData.soul and player:getSoul() < spellData.soul then
-
-    return false
-  end
-
+    -- Checa vocação
     if spellData.vocations then
         local voc = player:getVocation()
         if not canUseSpellVocation(spellData.vocations, voc, spellData.id) then
@@ -128,7 +110,27 @@ local function playerCanUseSpell(spellData)
         end
     end
 
-  return true
+    -- Checa level
+    if spellData.level and player:getLevel() < spellData.level then
+        return false
+    end
+
+    -- Checa mana
+    if spellData.mana and player:getMana() < spellData.mana then
+        return false
+    end
+
+    -- Checa soul
+    if spellData.soul and player:getSoul() < spellData.soul then
+        return false
+    end
+
+    -- Checa se precisa aprender
+    if spellData.needLearn and not spellListData[tostring(spellData.id)] then
+        return false
+    end
+
+    return true
 end
 
 
@@ -806,9 +808,11 @@ end
         button.cache.castParam = formatedParam
       end
 
-      if not playerCanUseSpell(spellData) then
-        button.item.text.gray:setVisible(true)
-      end
+            if playerCanUseSpell(spellData) then
+                button.item.text.gray:setVisible(false)
+            else
+                button.item.text.gray:setVisible(true)
+            end
 
       checkRemainSpellCooldown(button, spellData.id)
     else
