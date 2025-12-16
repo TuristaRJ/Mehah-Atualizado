@@ -15,11 +15,14 @@ local customVocationMapping = {
 
 
 -- Função auxiliar para verificar se o player pode usar a spell (considerando vocações customizadas)
-
 local function canUseSpellVocation(spellVocations, playerVocation, spellId)
     -- Equivalência para sorcerer/master sorcerer: 3/13 são tratados como 1/5
     local sorcEquiv = {[3]=1, [13]=5}
-    local vocToCheck = sorcEquiv[playerVocation] or playerVocation
+    -- Equivalência para paladin/royal paladin: 2/12 são tratados como 2/7
+    local palaEquiv = {[2]=2, [12]=7}
+    
+    local vocToCheck = sorcEquiv[playerVocation] or palaEquiv[playerVocation] or playerVocation
+    
     -- Sincroniza com a lógica do assignSpell para knights
     if (vocToCheck == 1 or vocToCheck == 11) then
         local allowedKnightSpells = {
@@ -28,6 +31,13 @@ local function canUseSpellVocation(spellVocations, playerVocation, spellId)
             [194]=true, [264]=true, [261]=true, [93]=true
         }
         return allowedKnightSpells[spellId] and true or false
+    elseif (vocToCheck == 2 or vocToCheck == 7) then
+        local allowedPaladinSpells = {
+            [248]=true, [29]=true, [90]=true, [147]=true, [124]=true, [125]=true, [122]=true, [111]=true, [11]=true, [6]=true, [143]=true, [2]=true, [160]=true, [81]=true, [10]=true, [1]=true, [172]=true, [76]=true, [127]=true,
+            [159]=true, [36]=true, [135]=true, [57]=true, [134]=true, [20]=true, [51]=true, [176]=true, [49]=true, [110]=true, [30]=true, [78]=true, [130]=true, [195]=true, [265]=true, [258]=true, [268]=true, [238]=true
+
+        }
+        return allowedPaladinSpells[spellId] and true or false
     elseif (vocToCheck == 3 or vocToCheck == 13) then
         local allowedSorcererSpells = {
                 [248]=true, [169]=true, [177]=true, [29]=true, [139]=true, [87]=true, [88]=true, [38]=true, [140]=true, [129]=true, [22]=true, [13]=true, [138]=true, [45]=true, [81]=true, [10]=true, [1]=true, [172]=true, [149]=true,
@@ -42,13 +52,14 @@ local function canUseSpellVocation(spellVocations, playerVocation, spellId)
                 [172]=true, [76]=true, [44]=true, [82]=true, [152]=true, [43]=true, [39]=true, [153]=true, [9]=true, [113]=true, [174]=true, [120]=true, [3]=true, [156]=true, [75]=true, [157]=true, [6]=true, [11]=true, [20]=true,
                 [89]=true, [2]=true, [118]=true, [56]=true, [245]=true, [26]=true, [7]=true, [25]=true, [27]=true, [77]=true, [8]=true, [91]=true, [17]=true, [50]=true, [32]=true, [18]=true, [28]=true, [33]=true, [31]=true, [4]=true, [5]=true, [12]=true,
                 [83]=true, [14]=true, [30]=true, [78]=true, [94]=true, [54]=true, [114]=true, [115]=true, [116]=true, [197]=true, [267]=true, [262]=true, [263]=true, [242]=true
-
         }
         return allowedDruidSpells[spellId] and true or false
     end
+    
     if spellId and AllowedSpellsByClass and AllowedSpellsByClass[spellId] then
         return AllowedSpellsByClass[spellId][vocToCheck] and true or false
     end
+    
     -- Verificação direta usando equivalência
     if spellVocations and type(spellVocations) == 'table' then
         for _, v in ipairs(spellVocations) do
@@ -57,6 +68,7 @@ local function canUseSpellVocation(spellVocations, playerVocation, spellId)
             end
         end
     end
+    
     return false
 end
 

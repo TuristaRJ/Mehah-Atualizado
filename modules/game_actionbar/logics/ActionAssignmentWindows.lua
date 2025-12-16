@@ -48,7 +48,7 @@ function assignSpell(button)
     
     ActionBarController:findWidget("#dev"):setVisible(dev)
     
-    -- ✅ CORRIGIDO: Pega vocação direto do player
+
         if not player then
             print("[ERROR] Player (localPlayer) is nil! Não é possível obter a vocação.")
             alert('Player não está disponível. Tente novamente após o login.')
@@ -133,10 +133,15 @@ function assignSpell(button)
                         [83]=true, [14]=true, [30]=true, [78]=true, [94]=true, [54]=true, [114]=true, [115]=true, [116]=true, [197]=true, [267]=true, [262]=true, [263]=true, [242]=true
 
                     }
-                    canShow = allowedDruidSpells[spellData.id] or false
-                elseif (playerVocation == 2 or playerVocation == 12) then
-                    canShow = (spellData.id == 36)
-                else
+                       elseif (playerVocation == 2 or playerVocation == 12) then
+                    local allowedPaladinSpells = {
+                        [248]=true, [29]=true, [90]=true, [147]=true, [124]=true, [125]=true, [122]=true, [111]=true, [11]=true, [6]=true, [143]=true, [2]=true, [160]=true, [81]=true, [10]=true, [1]=true, [172]=true, [76]=true, [127]=true,
+                        [159]=true, [36]=true, [135]=true, [57]=true, [134]=true, [20]=true,[51]=true, [176]=true, [49]=true, [110]=true, [30]=true, [78]=true, [130]=true, [195]=true, [265]=true, [258]=true, [268]=true, [238]=true
+
+                   }
+                   canShow = allowedPaladinSpells[spellData.id] or false
+
+                        else
                     canShow = showAll or canUseSpellVocation(spellData.vocations, playerVocation, spellData.id)
                 end
                 local levelOk = not filterByLevel or not spellData.level or spellData.level <= playerLevel
