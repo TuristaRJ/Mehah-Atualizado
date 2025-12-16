@@ -23,11 +23,9 @@ local function canUseSpellVocation(spellVocations, playerVocation, spellId)
         local allowedKnightSpells = {
             [248]=true, [29]=true, [62]=true, [80]=true, [133]=true, [61]=true, [131]=true, [144]=true, [20]=true, [105]=true, [59]=true, [11]=true, [106]=true, [6]=true, [141]=true, [160]=true, [158]=true, [81]=true,
             [10]=true, [1]=true, [76]=true, [132]=true, [159]=true, [126]=true, [107]=true, [170]=true, [123]=true, [271]=true, [237]=true, [239]=true,
-            [194]=true, [264]=true, [261]=true, [93]=true,
-            [19]=true, [78]=true -- Adicionado Exori e outras spells clássicas de Knight
+            [194]=true, [264]=true, [261]=true, [93]=true
         }
         local result = allowedKnightSpells[spellId] and true or false
-        print(string.format('[DEBUG] canUseSpellVocation: Knight vocToCheck=%s, spellId=%s, result=%s', tostring(vocToCheck), tostring(spellId), tostring(result)))
         return result
     elseif (vocToCheck == 2 or vocToCheck == 7) then
         local allowedPaladinSpells = {
@@ -63,20 +61,17 @@ local function canUseSpellVocation(spellVocations, playerVocation, spellId)
     
     if spellId and AllowedSpellsByClass and AllowedSpellsByClass[spellId] then
         local result = AllowedSpellsByClass[spellId][vocToCheck] and true or false
-        print(string.format('[DEBUG] canUseSpellVocation: AllowedSpellsByClass vocToCheck=%s, spellId=%s, result=%s', tostring(vocToCheck), tostring(spellId), tostring(result)))
         return result
     end
     
     if spellVocations and type(spellVocations) == 'table' then
         for _, v in ipairs(spellVocations) do
             if v == vocToCheck then
-                print(string.format('[DEBUG] canUseSpellVocation: Table match vocToCheck=%s, spellId=%s', tostring(vocToCheck), tostring(spellId)))
                 return true
             end
         end
     end
     
-    print(string.format('[DEBUG] canUseSpellVocation: No match vocToCheck=%s, spellId=%s', tostring(vocToCheck), tostring(spellId)))
     return false
 end
 
@@ -148,43 +143,37 @@ local function getItemNameById(itemId)
 end
 
 local function playerCanUseSpell(spellData)
-    if not g_game.isOnline() then print('[DEBUG] playerCanUseSpell: not online'); return false end
-    if not spellData then print('[DEBUG] playerCanUseSpell: no spellData'); return false end
+    if not g_game.isOnline() then return false end
+    if not spellData then return false end
 
     -- Checa vocação
     if spellData.vocations then
         local voc = player:getVocation()
         if not canUseSpellVocation(spellData.vocations, voc, spellData.id) then
-            print(string.format('[DEBUG] playerCanUseSpell: vocation fail voc=%s, spellId=%s', tostring(voc), tostring(spellData.id)))
             return false
         end
     end
 
     -- Checa level
     if spellData.level and player:getLevel() < spellData.level then
-        print(string.format('[DEBUG] playerCanUseSpell: level fail playerLevel=%s, required=%s, spellId=%s', tostring(player:getLevel()), tostring(spellData.level), tostring(spellData.id)))
         return false
     end
 
     -- Checa mana
     if spellData.mana and player:getMana() < spellData.mana then
-        print(string.format('[DEBUG] playerCanUseSpell: mana fail playerMana=%s, required=%s, spellId=%s', tostring(player:getMana()), tostring(spellData.mana), tostring(spellData.id)))
         return false
     end
 
     -- Checa soul
     if spellData.soul and player:getSoul() < spellData.soul then
-        print(string.format('[DEBUG] playerCanUseSpell: soul fail playerSoul=%s, required=%s, spellId=%s', tostring(player:getSoul()), tostring(spellData.soul), tostring(spellData.id)))
         return false
     end
 
     -- Checa se precisa aprender
     if spellData.needLearn and not spellListData[tostring(spellData.id)] then
-        print(string.format('[DEBUG] playerCanUseSpell: needLearn fail spellId=%s', tostring(spellData.id)))
         return false
     end
 
-    print(string.format('[DEBUG] playerCanUseSpell: success spellId=%s', tostring(spellData.id)))
     return true
 end
 

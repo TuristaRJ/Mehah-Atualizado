@@ -54,28 +54,23 @@ function terminate()
 end
 
 function loadIcon(iconId)
-    local spell, profile, spellName = Spells.getSpellByIcon(iconId)
-    if not spellName then
-        print('[WARNING] loadIcon: empty spellName for server spell id: ' .. iconId)
+    -- Sempre usar o profile 'Default' e o id da spell, igual à action bar
+    local spell = Spells.getById(iconId)
+    if not spell then
+        print('[WARNING] loadIcon: spell not found for id: ' .. tostring(iconId))
         return nil, nil
     end
-    if not profile then
-        print('[WARNING] loadIcon: empty profile for server spell id: ' .. iconId)
-        return nil, nil
-    end
-
+    local profile = 'Default'
+    local spellSettings = SpelllistSettings[profile]
     local icon = cooldownPanel:getChildById(iconId)
     if not icon then
         icon = g_ui.createWidget('SpellIcon')
         icon:setId(iconId)
     end
-
-    local spellSettings = SpelllistSettings[profile]
     if spellSettings then
-        -- Usar o mesmo ícone e recorte do 32x32 padrão da actionbar
         icon:setImageSource(spellSettings.iconFile)
-        icon:setImageClip(Spells.getImageClip(spell.clientId, profile))
-        icon.spellName = spellName
+        icon:setImageClip(Spells.getImageClip(spell.id, profile))
+        icon.spellName = spell.name
         local progressRect = icon:getChildById(iconId)
         local isNewProgressRect = false
         if not progressRect then
@@ -85,15 +80,15 @@ function loadIcon(iconId)
             isNewProgressRect = true
         end
         progressRect.icon = icon
-        progressRect:setTooltip(spellName .. " (" .. (spell.exhaustion / 1000) .. " sec. cooldown)")
+        progressRect:setTooltip(spell.name .. " (" .. (spell.exhaustion / 1000) .. " sec. cooldown)")
         if isNewProgressRect then
             progressRect:setPercent(0)
         end
     else
-        print('[WARNING] loadIcon: empty spell icon for server spell id: ' .. iconId)
+        print('[WARNING] loadIcon: empty spell icon for server spell id: ' .. tostring(iconId))
         icon = nil
     end
-    return icon, spellName
+    return icon, spell.name
 end
 
 function onMiniWindowOpen()
@@ -216,18 +211,14 @@ function onSpellCooldown(iconId, duration)
     if not cooldownWindow:isVisible() then
         return
     end
-    print('[DEBUG] onSpellCooldown: received iconId =', iconId)
-    -- Se iconId for string, tenta mapear pelo nome da spell
     local realIconId = iconId
     if type(iconId) == 'number' then
-        -- tenta obter o nome da spell pelo id
         local spell = Spells.getSpellByIcon(iconId)
         if spell and spell.name then
             realIconId = spell.name
         end
     end
     local icon, spellName = loadIcon(realIconId)
-    print('[DEBUG] onSpellCooldown: mapped spellName =', tostring(spellName))
     if not icon then
         print('[WARNING] Can not load cooldown icon on spell with id: ' .. tostring(iconId))
         return
