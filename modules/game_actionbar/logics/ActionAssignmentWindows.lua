@@ -115,6 +115,15 @@ function assignSpell(button)
 
                     }
                     canShow = allowedKnightSpells[spellData.id] or false
+                    -- Monk e Exalted Monk
+        elseif (playerVocation == 5 or playerVocation == 15) then
+            local allowedMonkSpells = {
+                [248]=true, [29]=true, [141]=true, [2]=true, [1]=true, [172]=true, [39]=true, [20]=true, [11]=true, [6]=true, [81]=true, [10]=true, [76]=true,
+                [273]=true, [274]=true, [275]=true, [276]=true, [277]=true, [278]=true, [279]=true, [280]=true, [281]=true, [282]=true, [283]=true, [284]=true, [285]=true, [286]=true, [287]=true, [288]=true, [289]=true,
+                [290]=true, [291]=true, [292]=true, [293]=true, [294]=true, [295]=true, [296]=true, [297]=true
+
+            }
+            canShow = allowedMonkSpells[spellData.id] or false
                 elseif (playerVocation == 8 or playerVocation == 5 or playerVocation == 9 or playerVocation == 10) then
                     canShow = (spellData.id == 81)
                 elseif (playerVocation == 3 or playerVocation == 13) then
@@ -131,8 +140,8 @@ function assignSpell(button)
                         [172]=true, [76]=true, [44]=true, [82]=true, [152]=true, [43]=true, [39]=true, [153]=true, [9]=true, [113]=true, [174]=true, [120]=true, [3]=true, [156]=true, [75]=true, [157]=true, [6]=true, [11]=true, [20]=true,
                         [89]=true, [2]=true, [118]=true, [56]=true, [245]=true, [26]=true, [7]=true, [25]=true, [27]=true, [77]=true, [8]=true, [91]=true, [17]=true, [50]=true, [32]=true, [18]=true, [28]=true, [33]=true, [31]=true, [4]=true, [5]=true, [12]=true,
                         [83]=true, [14]=true, [30]=true, [78]=true, [94]=true, [54]=true, [114]=true, [115]=true, [116]=true, [197]=true, [267]=true, [262]=true, [263]=true, [242]=true
-
                     }
+                    canShow = allowedDruidSpells[spellData.id] or false
                        elseif (playerVocation == 2 or playerVocation == 12) then
                     local allowedPaladinSpells = {
                         [248]=true, [29]=true, [90]=true, [147]=true, [124]=true, [125]=true, [122]=true, [111]=true, [11]=true, [6]=true, [143]=true, [2]=true, [160]=true, [81]=true, [10]=true, [1]=true, [172]=true, [76]=true, [127]=true,
