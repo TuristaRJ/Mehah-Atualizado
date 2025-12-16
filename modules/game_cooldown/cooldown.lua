@@ -72,8 +72,9 @@ function loadIcon(iconId)
 
     local spellSettings = SpelllistSettings[profile]
     if spellSettings then
-        icon:setImageSource(spellSettings.iconsForGameCooldown)
-        icon:setImageClip(Spells.getImageClipCooldown(spell.clientId, profile))
+        -- Usar o mesmo ícone e recorte do 32x32 padrão da actionbar
+        icon:setImageSource(spellSettings.iconFile)
+        icon:setImageClip(Spells.getImageClip(spell.clientId, profile))
         icon.spellName = spellName
         local progressRect = icon:getChildById(iconId)
         local isNewProgressRect = false
@@ -215,9 +216,20 @@ function onSpellCooldown(iconId, duration)
     if not cooldownWindow:isVisible() then
         return
     end
-    local icon, spellName = loadIcon(iconId)
+    print('[DEBUG] onSpellCooldown: received iconId =', iconId)
+    -- Se iconId for string, tenta mapear pelo nome da spell
+    local realIconId = iconId
+    if type(iconId) == 'number' then
+        -- tenta obter o nome da spell pelo id
+        local spell = Spells.getSpellByIcon(iconId)
+        if spell and spell.name then
+            realIconId = spell.name
+        end
+    end
+    local icon, spellName = loadIcon(realIconId)
+    print('[DEBUG] onSpellCooldown: mapped spellName =', tostring(spellName))
     if not icon then
-        print('[WARNING] Can not load cooldown icon on spell with id: ' .. iconId)
+        print('[WARNING] Can not load cooldown icon on spell with id: ' .. tostring(iconId))
         return
     end
     icon:setParent(cooldownPanel)

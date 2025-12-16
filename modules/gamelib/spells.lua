@@ -740,14 +740,23 @@ function Spells.getSpellByWords(words)
 end
 
 function Spells.getSpellByIcon(iconId)
-  for profile, data in pairs(SpellInfo) do
+    -- Primeiro tenta pelo id
+    for profile, data in pairs(SpellInfo) do
       for k, spell in pairs(data) do
-          if spell.id == iconId then
-              return spell, profile, k
-          end
+        if spell.id == iconId then
+          return spell, profile, k
+        end
       end
-  end
-  return nil
+    end
+    -- Se não achou, tenta pelo nome (caso iconId seja string)
+    for profile, data in pairs(SpellInfo) do
+      for k, spell in pairs(data) do
+        if k == iconId or spell.name == iconId then
+          return spell, profile, k
+        end
+      end
+    end
+    return nil
 end
 
 function Spells.getSpellIconIds()
